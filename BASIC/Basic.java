@@ -18,6 +18,7 @@ import java.util.Scanner;
  *
  *   RUN - Menjalankan program
  *   END - Menamatkan program
+ *   RESTART - Memula semula dari awal program
  *  STOP - Menghentikan program sementara
  *  GOTO - Melompat ke baris tertentu dalam program
  *  GOSUB - Melompat ke subrutin dan kembali selepas RETURN
@@ -42,11 +43,13 @@ import java.util.Scanner;
  *
  *  FOR ... TO ... STEP - Mulai gelung (loop) dengan julat tertentu
  *  NEXT - Menandakan penghujung gelung FOR
+ *  WHILE ... WEND - Gelung yang berjalan selagi syarat dipenuhi
  *
  * 5. Fungsi Matematik
  *
  * ABS(X) - Nilai mutlak
  * INT(X) - Nilai bulat terdekat ke bawah
+ * SIN(X), COS(X), TAN(X) - Fungsi trigonometri
  * SQR(X) - Punca kuasa dua
  * RND - Nombor rawak antara 0 dan 1
  *
@@ -66,15 +69,26 @@ public class Basic {
     public Basic() {}
     
     public void launch() {
-        while (true) {
-            System.out.print("Basic > ");
-            String in = new Scanner(System.in).nextLine().trim();
-            
+        Program program = new Program();
+        while (program.system == Program.PROGRAM_START) {
+             System.out.println("Selamat datang ke Basic");
+             
+             while (true) {
+                 System.out.print("Basic > ");
+                 String in = new Scanner(System.in).nextLine().trim();
+                 if (in.equals("exit")) {
+                     program.system = Program.PROGRAM_STOP;
+                     break;
+                 }
+             }
+             
         }
+        System.out.println("Program di tamat.");
+        try { Thread.sleep(1000); } catch (Exception e) {}
+        System.exit(0);
     }
     
     public static void main(String[] args) {
-        System.out.println("Welcome to Basic");
         
         Basic basic = new Basic();
         basic.launch();
