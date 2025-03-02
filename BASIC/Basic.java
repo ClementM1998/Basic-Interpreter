@@ -18,7 +18,7 @@ import java.util.Scanner;
  *
  *   RUN - Menjalankan program
  *   END - Menamatkan program
- *   RESTART - Memula semula dari awal program
+ *   RESTART - (New) Memula semula dari awal program
  *  STOP - Menghentikan program sementara
  *  GOTO - Melompat ke baris tertentu dalam program
  *  GOSUB - Melompat ke subrutin dan kembali selepas RETURN
