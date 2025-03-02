@@ -70,17 +70,22 @@ public class Basic {
     
     public void launch() {
         Program program = new Program();
-        while (program.system == Program.PROGRAM_START) {
-             System.out.println("Selamat datang ke Basic");
-             
-             while (true) {
-                 System.out.print("Basic > ");
-                 String in = new Scanner(System.in).nextLine().trim();
-                 if (in.equals("exit")) {
-                     program.system = Program.PROGRAM_STOP;
-                     break;
-                 }
-             }
+        while (program.system != Program.PROGRAM_STOP) {
+            
+            System.out.println("Selamat datang ke Basic");
+            
+            while (true) {
+                System.out.print("Basic > ");
+                String in = new Scanner(System.in).nextLine().trim();
+                if (in.equals("exit")) {
+                    program.system = Program.PROGRAM_STOP;
+                    break;
+                }
+                if (in.equals("restart")) {
+                    program.system = Program.PROGRAM_RESTART;
+                    break;
+                }
+            }
              
         }
         System.out.println("Program di tamat.");
