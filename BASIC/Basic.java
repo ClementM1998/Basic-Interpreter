@@ -19,6 +19,7 @@ import java.util.Scanner;
  *   RUN - Menjalankan program
  *   END - Menamatkan program
  *   RESTART - (New) Memula semula dari awal program
+ *   EXIT - (New) Keluar dari program
  *  STOP - Menghentikan program sementara
  *  GOTO - Melompat ke baris tertentu dalam program
  *  GOSUB - Melompat ke subrutin dan kembali selepas RETURN
@@ -71,26 +72,40 @@ public class Basic {
     public void launch() {
         Program program = new Program();
         while (program.system != Program.PROGRAM_STOP) {
-            
+            if (program.system == Program.PROGRAM_RESTART) {
+                program.restart();
+            }
             System.out.println("Selamat datang ke Basic");
-            
             while (true) {
                 System.out.print("Basic > ");
                 String in = new Scanner(System.in).nextLine().trim();
                 if (in.equals("exit")) {
                     program.system = Program.PROGRAM_STOP;
                     break;
-                }
-                if (in.equals("restart")) {
+                } else if (in.equals("restart")) {
                     program.system = Program.PROGRAM_RESTART;
                     break;
                 }
             }
-             
         }
+        program.clear();
         System.out.println("Program di tamat.");
-        try { Thread.sleep(1000); } catch (Exception e) {}
-        System.exit(0);
+        try {
+            program.sleep(1000);
+            program.loading(1, 53, 1000);
+            program.sleep(1000);
+            System.out.println("Program tamat");
+            program.sleep(500);
+            System.exit(0);
+        } catch (Exception e) {
+            program.sleep(1000);
+            System.out.println("Program dipaksa tutup");
+            program.loading(1, 100, 1000);
+            program.sleep(1000);
+            System.out.println("Program tamat");
+            program.sleep(500);
+            System.exit(1);
+        }
     }
     
     public static void main(String[] args) {
