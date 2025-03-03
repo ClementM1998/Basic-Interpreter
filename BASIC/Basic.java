@@ -20,6 +20,7 @@ import java.util.Scanner;
  *   END - Menamatkan program
  *   RESTART - (New) Memula semula dari awal program
  *   EXIT - (New) Keluar dari program
+ *   CLEAR - (New) Bersihkan skrin
  *  STOP - Menghentikan program sementara
  *  GOTO - Melompat ke baris tertentu dalam program
  *  GOSUB - Melompat ke subrutin dan kembali selepas RETURN
