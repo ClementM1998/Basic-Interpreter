@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * 1. Kawalan Program
  *
- *   RUN - Menjalankan program
+ *   RUN - Menjalankan program yang dimuat
  *   END - Menamatkan program
  *   NEW - Mengosongkan memori program yang dimuat
  *   RESTART - (New) Memula semula dari awal program
