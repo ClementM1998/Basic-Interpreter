@@ -66,5 +66,24 @@ public class Program {
             System.out.println("] 100% Selesai!");
         }
     }
-    
+
+    public void exit() {
+        System.out.println("Program di tamat.");
+        try {
+            sleep(1000);
+            loading(1, 30, 1000);
+            sleep(1000);
+            System.out.println("Program tamat");
+            sleep(500);
+            System.exit(0);
+        } catch (Exception e) {
+            sleep(1000);
+            System.out.println("Program dipaksa tutup");
+            loading(1, 100, 1000);
+            sleep(1000);
+            System.out.println("Program tamat");
+            sleep(500);
+            System.exit(1);
+        }
+    }
 }
