@@ -90,6 +90,8 @@ public class Basic {
                     break;
                 } else if (in.equals("clear")) {
                     program.clear();
+                } else if (in.equals("run")) {
+                    program.run();
                 }
             }
         }
