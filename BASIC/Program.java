@@ -86,4 +86,7 @@ public class Program {
             System.exit(1);
         }
     }
+
+    public void run() {
+    }
 }
