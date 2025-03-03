@@ -18,6 +18,7 @@ import java.util.Scanner;
  *
  *   RUN - Menjalankan program
  *   END - Menamatkan program
+ *   NEW - Mengosongkan memori program yang dimuat
  *   RESTART - (New) Memula semula dari awal program
  *   EXIT - (New) Keluar dari program
  *   CLEAR - (New) Bersihkan skrin
