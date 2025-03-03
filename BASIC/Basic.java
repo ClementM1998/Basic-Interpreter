@@ -89,23 +89,7 @@ public class Basic {
             }
         }
         program.clear();
-        System.out.println("Program di tamat.");
-        try {
-            program.sleep(1000);
-            program.loading(1, 53, 1000);
-            program.sleep(1000);
-            System.out.println("Program tamat");
-            program.sleep(500);
-            System.exit(0);
-        } catch (Exception e) {
-            program.sleep(1000);
-            System.out.println("Program dipaksa tutup");
-            program.loading(1, 100, 1000);
-            program.sleep(1000);
-            System.out.println("Program tamat");
-            program.sleep(500);
-            System.exit(1);
-        }
+        program.exit();
     }
     
     public static void main(String[] args) {
