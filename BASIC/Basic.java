@@ -19,6 +19,7 @@ import java.util.Scanner;
  *   RUN - Menjalankan program yang dimuat
  *   END - Menamatkan program
  *   NEW - Mengosongkan memori program yang dimuat
+ *  LIST - Digunakan untuk memaparkan kod atau menyenaraikan kod dari nombor baris dalam program
  *   RESTART - (New) Memula semula dari awal program
  *   EXIT - (New) Keluar dari program
  *   CLEAR - (New) Bersihkan skrin
