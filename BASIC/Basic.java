@@ -86,6 +86,8 @@ public class Basic {
                 } else if (in.equals("restart")) {
                     program.system = Program.PROGRAM_RESTART;
                     break;
+                } else if (in.equals("clear")) {
+                    program.clear();
                 }
             }
         }
