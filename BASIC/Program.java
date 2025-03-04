@@ -1,23 +1,26 @@
+import java.util.ArrayList;
 
 public class Program {
     public static int PROGRAM_START = 2;
     public static int PROGRAM_RESTART = 1;
     public static int PROGRAM_STOP = 0;
-    
-    public int system = PROGRAM_START;
-    
+
+    public static int system = PROGRAM_START;
+
     public static int PROGRESS_BAR_1 = 1; // versi 1 untuk animasi biasa
     public static int PROGRESS_BAR_2 = 2; // versi 2 untuk progress bar biasa
     public static int PROGRESS_BAR_3 = 3; // versi 3 untuk progress bar yang lebih interaktif
-    
+
+    private Memory memory = new Memory();
+
     private String getOSname() {
         return System.getProperty("os.name");
     }
-    
+
     public void restart() {
         clear();
     }
-    
+
     public void clear() {
         try {
             if (getOSname().toLowerCase().contains("win")) {
@@ -31,13 +34,13 @@ public class Program {
             System.out.println("Gagal membersihkan skrin!");
         }
     }
-    
+
     public void sleep(long times) {
         try {
             Thread.sleep(times);
         } catch (Exception e) {}
     }
-    
+
     public void loading(int style, int total, long times) {
         if (style == PROGRESS_BAR_1) {
             String[] loadingFrames = {"|", "/", "-", "\\"};
@@ -87,7 +90,30 @@ public class Program {
         }
     }
 
+    public void list() {
+    }
+
     public void run() {
     }
-    
+
+    public void commandLine(String in) {
+        if (checkIfFirstLineNumber(in)) {
+            System.out.println("in to memory: " + in);
+        } else {
+            System.out.println("not to memory: " + in);
+        }
+    }
+
+    private boolean checkIfFirstLineNumber(String line) {
+        if (line.contains(" ")) {
+            String first = line.substring(0, line.indexOf(" "));
+            char[] chr = first.toCharArray();
+            for (char c : chr) {
+                if (!Character.isDigit(c)) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
