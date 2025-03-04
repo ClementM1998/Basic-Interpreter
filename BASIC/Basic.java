@@ -1,107 +1,142 @@
 
-import java.util.Scanner;
+import java.util.Map;
+import java.util.TreeMap;
 
-/*
- * Perihal Basic dari Claymen
- *
- *   Basic merupakan sebuah program yang ditulis oleh saya sendiri yang terinspirasi
- * dari BASIC Darthmouth pada 1964. Saya membuat program Basic untuk tujuan pembelajaran
- * yang ditulis menggunakan bahasa pemprograman Java. Saya menggunakan Java untuk Interpreter Basic
- * ini kerana saya senang untuk buat kerja dengan bahasa Java.
- *
- * Tujuan saya
- *
- *
- * [ Kata kunci ]
- *
- * 1. Kawalan Program
- *
- *   RUN - Menjalankan program yang dimuat
- *   END - Menamatkan program
- *   NEW - Mengosongkan memori program yang dimuat
- *  SAVE - Menyimpan program di dalam penyimpan program
- *  LOAD - Memuat program yang di simpan dalam penyimpan program
- *  LIST - Digunakan untuk memaparkan kod atau menyenaraikan kod dari nombor baris dalam program
- *   RESTART - (New) Memula semula dari awal program
- *   EXIT - (New) Keluar dari program
- *   CLEAR - (New) Bersihkan skrin
- *  STOP - Menghentikan program sementara
- *  GOTO - Melompat ke baris tertentu dalam program
- *  GOSUB - Melompat ke subrutin dan kembali selepas RETURN
- *  RETURN - Kembali ke baris selepas GOSUB
- *  IF ... THEN - Kawalan aliran berdasarkan syarat
- *
- * 2. Input dan Output
- *
- *  PRINT - Mencetak teks atau nilai ke skrin
- *  INPUT - Meminta pengguna memasukkan nilai
- *  READ - Membaca nilai dari senarai DATA
- *  DATA - Menyediakan data untuk digunakan dengan READ
- *  RESTORE - Menetapkan semula pointer READ ke awal DATA
- *
- * 3. Pengiraan dan Perubahan Nilai
- *
- * LET - Menetapkan nilai kepada pemboleh ubah (boleh ditulis tanpa LET)
- * DIM - Mengisytiharkan array (contoh: DIM A(10))
- * REM - Menulis komen dalam kod program
- *
- * 4. Perulangan
- *
- *  FOR ... TO ... STEP - Mulai gelung (loop) dengan julat tertentu
- *  NEXT - Menandakan penghujung gelung FOR
- *  WHILE ... WEND - Gelung yang berjalan selagi syarat dipenuhi
- *
- * 5. Fungsi Matematik
- *
- * ABS(X) - Nilai mutlak
- * INT(X) - Nilai bulat terdekat ke bawah
- * SIN(X), COS(X), TAN(X) - Fungsi trigonometri
- * SQR(X) - Punca kuasa dua
- * RND - Nombor rawak antara 0 dan 1
- *
- * 6. Fungsi String
- *
- * STR$(X) - Menukar nombor ke string
- * LEN(X$) - Mengira panjang teks dalam string
- * MID$(X$, start, length) - Mengambil substring dari teks
- * LEFT$(X$, n) - Mengambil n aksara dari kiri string
- * RIGHT$(X$, n) - Mengambil n aksara dari kanan string
- * VAL(X$) - Menukar string ke nombor
- *
- */
+public class Program {
+    public static int PROGRAM_START = 2;
+    public static int PROGRAM_RESTART = 1;
+    public static int PROGRAM_STOP = 0;
 
-public class Basic {
+    public static int system = PROGRAM_START;
 
-    public Basic() {}
+    public static int PROGRESS_BAR_1 = 1; // versi 1 untuk animasi biasa
+    public static int PROGRESS_BAR_2 = 2; // versi 2 untuk progress bar biasa
+    public static int PROGRESS_BAR_3 = 3; // versi 3 untuk progress bar yang lebih interaktif
 
-    public void launch() {
-        Program program = new Program();
-        while (Program.system != Program.PROGRAM_STOP) {
-            if (Program.system == Program.PROGRAM_RESTART) {
-                program.restart();
+    private Memory memory = new Memory();
+
+    private String getOSname() {
+        return System.getProperty("os.name");
+    }
+
+    public void restart() {
+        clear();
+    }
+
+    public void clear() {
+        try {
+            if (getOSname().toLowerCase().contains("win")) {
+                // Untuk Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // Untuk Linux dan Mac
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
-            System.out.println("Selamat datang ke Basic");
-            while (true) {
-                System.out.print("Basic > ");
-                String in = new Scanner(System.in).nextLine().trim();
-                if (in.equals("exit")) {
-                    Program.system = Program.PROGRAM_STOP;
-                    break;
-                } else if (in.equals("restart")) {
-                    Program.system = Program.PROGRAM_RESTART;
-                    break;
-                }
-                else program.commandLine(in);
-            }
+        } catch (Exception e) {
+            System.out.println("Gagal membersihkan skrin!");
         }
-        program.clear();
-        program.exit();
     }
 
-    public static void main(String[] args) {
-
-        Basic basic = new Basic();
-        basic.launch();
-
+    public void sleep(long times) {
+        try {
+            Thread.sleep(times);
+        } catch (Exception e) {}
     }
+
+    public void loading(int style, int total, long times) {
+        if (style == PROGRESS_BAR_1) {
+            String[] loadingFrames = {"|", "/", "-", "\\"};
+            System.out.print("Loading ");
+            for (int i = 0;i < total;i++) {
+                System.out.print("\rLoading " + loadingFrames[i % 4]);
+                sleep(times);
+            }
+            System.out.println("\rLoading Selesai!");
+        } else if (style == PROGRESS_BAR_2) {
+            System.out.print("Loading: [");
+            for (int i = 0;i <= total;i++) {
+                System.out.print("=");
+                sleep(times);
+            }
+            System.out.println("] 100% Selesai!");
+        } else if (style == PROGRESS_BAR_3) {
+            System.out.print("Loading: [");
+            for (int i = 0;i <= total;i++) {
+                System.out.print("=");
+                int percentage = (i * 100) / total;
+                System.out.print("] " + percentage + "%");
+                sleep(times);
+                System.out.print("\rLoading: [");
+            }
+            System.out.println("] 100% Selesai!");
+        }
+    }
+
+    public void exit() {
+        System.out.println("Program di tamat.");
+        try {
+            sleep(1000);
+            loading(1, 10, 1000);
+            sleep(1000);
+            System.out.println("Program tamat");
+            sleep(500);
+            System.exit(0);
+        } catch (Exception e) {
+            sleep(1000);
+            System.out.println("Program dipaksa tutup");
+            loading(1, 10, 1000);
+            sleep(1000);
+            System.out.println("Program tamat");
+            sleep(500);
+            System.exit(1);
+        }
+    }
+
+    public void list() {
+    }
+
+    public void run() {
+    }
+
+    public void commandLine(String in) {
+        if (checkIfFirstLineNumber(in)) {
+            String number = "";
+            String statement = "";
+            if (in.contains(" ")) {
+                String first = in.substring(0, in.indexOf(" "));
+                char[] chr = first.toCharArray();
+                for (char c : chr) if (Character.isDigit(c)) number += c;
+                statement = in.substring(first.length(), in.length()).trim();
+            } else {
+                char[] chr = in.toCharArray();
+                for (char c : chr) number += c;
+            }
+            memory.add(Integer.valueOf(number), statement);
+        } else if (in.equals("list")) {
+            TreeMap<Integer, String> mem = memory.getAll();
+            for (Map.Entry me : mem.entrySet()) {
+                System.out.println(me.getKey() + " " + me.getValue());
+            }
+        } else {
+            System.out.println("not to memory: " + in);
+        }
+    }
+
+    private boolean checkIfFirstLineNumber(String line) {
+        if (line.contains(" ")) {
+            String first = line.substring(0, line.indexOf(" "));
+            char[] chr = first.toCharArray();
+            for (char c : chr) {
+                if (!Character.isDigit(c)) return false;
+            }
+            return true;
+        } else {
+            char[] chr = line.toCharArray();
+            for (char c : chr) {
+                if (!Character.isDigit(c)) return false;
+            }
+            return true;
+        }
+    }
+
 }
