@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * Tujuan saya
  *
- * 
+ *
  * [ Kata kunci ]
  *
  * 1. Kawalan Program
@@ -19,6 +19,8 @@ import java.util.Scanner;
  *   RUN - Menjalankan program yang dimuat
  *   END - Menamatkan program
  *   NEW - Mengosongkan memori program yang dimuat
+ *  SAVE - Menyimpan program di dalam penyimpan program
+ *  LOAD - Memuat program yang di simpan dalam penyimpan program
  *  LIST - Digunakan untuk memaparkan kod atau menyenaraikan kod dari nombor baris dalam program
  *   RESTART - (New) Memula semula dari awal program
  *   EXIT - (New) Keluar dari program
@@ -69,13 +71,13 @@ import java.util.Scanner;
  */
 
 public class Basic {
-    
+
     public Basic() {}
-    
+
     public void launch() {
         Program program = new Program();
-        while (program.system != Program.PROGRAM_STOP) {
-            if (program.system == Program.PROGRAM_RESTART) {
+        while (Program.system != Program.PROGRAM_STOP) {
+            if (Program.system == Program.PROGRAM_RESTART) {
                 program.restart();
             }
             System.out.println("Selamat datang ke Basic");
@@ -83,26 +85,23 @@ public class Basic {
                 System.out.print("Basic > ");
                 String in = new Scanner(System.in).nextLine().trim();
                 if (in.equals("exit")) {
-                    program.system = Program.PROGRAM_STOP;
+                    Program.system = Program.PROGRAM_STOP;
                     break;
                 } else if (in.equals("restart")) {
-                    program.system = Program.PROGRAM_RESTART;
+                    Program.system = Program.PROGRAM_RESTART;
                     break;
-                } else if (in.equals("clear")) {
-                    program.clear();
-                } else if (in.equals("run")) {
-                    program.run();
                 }
+                else program.commandLine(in);
             }
         }
         program.clear();
         program.exit();
     }
-    
+
     public static void main(String[] args) {
-        
+
         Basic basic = new Basic();
         basic.launch();
-        
+
     }
 }
