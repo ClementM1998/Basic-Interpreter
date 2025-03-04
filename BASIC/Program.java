@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Program {
     public static int PROGRAM_START = 2;
@@ -98,7 +100,23 @@ public class Program {
 
     public void commandLine(String in) {
         if (checkIfFirstLineNumber(in)) {
-            System.out.println("in to memory: " + in);
+            String number = "";
+            String statement = "";
+            if (in.contains(" ")) {
+                String first = in.substring(0, in.indexOf(" "));
+                char[] chr = first.toCharArray();
+                for (char c : chr) if (Character.isDigit(c)) number += c;
+                statement = in.substring(first.length(), in.length()).trim();
+            } else {
+                char[] chr = in.toCharArray();
+                for (char c : chr) number += c;
+            }
+            memory.add(Integer.valueOf(number), statement);
+        } else if (in.equals("list")) {
+            TreeMap<Integer, String> mem = memory.getAll();
+            for (Map.Entry me : mem.entrySet()) {
+                System.out.println(me.getKey() + " " + me.getValue());
+            }
         } else {
             System.out.println("not to memory: " + in);
         }
@@ -112,8 +130,13 @@ public class Program {
                 if (!Character.isDigit(c)) return false;
             }
             return true;
+        } else {
+            char[] chr = line.toCharArray();
+            for (char c : chr) {
+                if (!Character.isDigit(c)) return false;
+            }
+            return true;
         }
-        return false;
     }
 
 }
