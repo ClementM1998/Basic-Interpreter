@@ -92,7 +92,11 @@ public class Program {
         }
     }
 
-    public void list() {
+    public void list(String ... args) {
+        TreeMap<Integer, String> mem = memory.getAll();
+        for (Map.Entry me : mem.entrySet()) {
+            System.out.println(me.getKey() + " " + me.getValue());
+        }
     }
 
     public void run() {
@@ -112,11 +116,19 @@ public class Program {
                 for (char c : chr) number += c;
             }
             memory.add(Integer.valueOf(number), statement);
-        } else if (in.equals("list")) {
-            TreeMap<Integer, String> mem = memory.getAll();
-            for (Map.Entry me : mem.entrySet()) {
-                System.out.println(me.getKey() + " " + me.getValue());
+        } else if (in.equals("list") || in.startsWith("list")) {
+            if (in.startsWith("list")) { // perintah list dan terdapat baris atau baris dan penyata
+                String line = in.substring("list".length(), in.length()).trim();
+                if (checkIfFirstLineNumber(line)) { // syunting baris
+
+                } else { // periksa baris
+                    
+                }
+            } else { // hanya perintah list
+                list();
             }
+        } else if (in.equals("run")) {
+            run();
         } else {
             System.out.println("not to memory: " + in);
         }
