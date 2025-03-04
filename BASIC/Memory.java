@@ -1,12 +1,11 @@
-
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public class Memory {
 
-    private HashMap<Integer, String> memory;
+    private TreeMap<Integer, String> memory;
 
     public Memory() {
-        memory = new HashMap<Integer, String>();
+        memory = new TreeMap<Integer, String>();
     }
 
     public void add(int num, String line) {
@@ -49,7 +48,7 @@ public class Memory {
         return memory.isEmpty();
     }
 
-    public HashMap<Integer, String> getAll() {
+    public TreeMap<Integer, String> getAll() {
         if (memory == null) {
             System.err.println("error: memory tidak boleh di akses");
             return null;
