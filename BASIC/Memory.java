@@ -1,11 +1,24 @@
+import java.io.*;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class Memory {
 
+    private String dirCurrent = System.getProperty("user.dir");
+    private String dirBasic = "Basic";
     private TreeMap<Integer, String> memory;
 
     public Memory() {
+        System.out.println("Path : " + getDirectoryBasic());
+        if (!new File(getDirectoryBasic()).exists()) {
+            new File(getDirectoryBasic()).mkdir();
+        }
         memory = new TreeMap<Integer, String>();
+    }
+
+    public String getDirectoryBasic() {
+        return new File(dirCurrent, dirBasic).getPath();
     }
 
     public void add(int num, String line) {
@@ -54,6 +67,34 @@ public class Memory {
             return null;
         }
         return memory;
+    }
+
+    public void save(String name, TreeMap<Integer, String> data) {
+        if (new File(getDirectoryBasic()).exists()) {
+            File file = new File(getDirectoryBasic(), name);
+            try {
+                FileWriter fw = new FileWriter(file);
+                for (Map.Entry<Integer, String> m : data.entrySet()) {
+                    fw.append(m.getKey() + " " + m.getValue());
+                }
+                fw.close();
+                System.out.println("Berjaya! Fail [" + name + "] di simpan");
+            } catch (IOException e) {
+                System.err.println("Ralat: Fail [" + name + "] tidak dapat di simpan");
+            }
+        } else {
+            System.err.println("Ralat: Direktori Basic tidak wujud");
+        }
+    }
+
+    public String load(String name) {
+        String data = "";
+        if (new File(getDirectoryBasic()).exists()) {
+
+        } else {
+            System.err.println("Ralat: Direktori Basic tidak wujud");
+        }
+        return data;
     }
 
 }
