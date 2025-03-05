@@ -92,14 +92,33 @@ public class Program {
         }
     }
 
-    public void list(String ... args) {
+    public void list(String stat) {
         TreeMap<Integer, String> mem = memory.getAll();
         for (Map.Entry me : mem.entrySet()) {
             System.out.println(me.getKey() + " " + me.getValue());
         }
     }
 
-    public void run() {
+    public void run(String stat) {
+        System.out.println("RUN : " + stat);
+    }
+
+    public void save(String stat) {
+        if (!stat.endsWith(".bas")) stat = stat + ".bas";
+        if (stat.equals("")) {
+            System.out.println("Ralat: Nama fail kosong");
+            System.out.println("Sila masukkan nama fail yang di simpan");
+            return;
+        }
+        if (memory.empty()) {
+            System.out.println("Ralat: Fail [" + stat + "] tidak dapat di simpan");
+            System.out.println("Memory kosong");
+            return;
+        }
+        memory.save(stat, memory.getAll());
+    }
+
+    public void load(String stat) {
     }
 
     public void commandLine(String in) {
@@ -116,21 +135,29 @@ public class Program {
                 for (char c : chr) number += c;
             }
             memory.add(Integer.valueOf(number), statement);
-        } else if (in.equals("list") || in.startsWith("list")) {
-            if (in.startsWith("list")) { // perintah list dan terdapat baris atau baris dan penyata
-                String line = in.substring("list".length(), in.length()).trim();
-                if (checkIfFirstLineNumber(line)) { // syunting baris
-
-                } else { // periksa baris
-                    
-                }
-            } else { // hanya perintah list
-                list();
-            }
-        } else if (in.equals("run")) {
-            run();
         } else {
-            System.out.println("not to memory: " + in);
+            //System.out.println("not to memory: " + in);
+            if (checkIfFirstKeyword(in, "list")) {
+                String stat = "";
+                if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
+                list(stat.trim());
+            } else if (checkIfFirstKeyword(in, "run")) {
+                String stat = "";
+                if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
+                run(stat.trim());
+            } else if (checkIfFirstKeyword(in, "save")) {
+                String name = "";
+                if (in.contains(" ")) name = in.substring(in.indexOf(" "));
+                save(name.trim());
+            } else if (checkIfFirstKeyword(in, "load")) {
+                String name = "";
+                if (in.contains(" ")) name = in.substring(in.indexOf(" "));
+                load(name.trim());
+            } else if (checkIfFirstKeyword(in, "clear")) {
+                clear();
+            } else {
+                System.out.println("Ralat Sintaks");
+            }
         }
     }
 
@@ -149,6 +176,19 @@ public class Program {
             }
             return true;
         }
+    }
+
+    private boolean checkIfFirstKeyword(String line, String key) {
+        String[] keywords = new String[] {
+                "list", "run", "save", "load", "clear"
+        };
+        if (line.contains(" ")) {
+            String first = line.substring(0, line.indexOf(" "));
+            for (String kw : keywords) if (first.equals(kw) && first.equals(key)) return true;
+        } else {
+            for (String kw : keywords) if (line.equals(kw) && line.equals(key)) return true;
+        }
+        return false;
     }
 
 }
