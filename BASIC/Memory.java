@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.Map;
 import java.util.Set;
@@ -75,7 +76,7 @@ public class Memory {
             try {
                 FileWriter fw = new FileWriter(file);
                 for (Map.Entry<Integer, String> m : data.entrySet()) {
-                    fw.append(m.getKey() + " " + m.getValue());
+                    fw.append(m.getKey() + " " + m.getValue()).append("\n");
                 }
                 fw.close();
                 System.out.println("Berjaya! Fail [" + name + "] di simpan");
@@ -87,10 +88,35 @@ public class Memory {
         }
     }
 
-    public String load(String name) {
-        String data = "";
+    public TreeMap<Integer, String> load(String name) {
+        TreeMap<Integer, String> data = new TreeMap<Integer, String>();
         if (new File(getDirectoryBasic()).exists()) {
-
+            File file = new File(getDirectoryBasic(), name);
+            try {
+                FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                StringBuffer buffer = new StringBuffer();
+                while ((line = br.readLine()) != null) {
+                    buffer.append(line).append("\n");
+                }
+                String[] lines = buffer.toString().split("\n");
+                for (String str : lines) {
+                    if (str.contains(" ")) {
+                        String num = str.substring(0, str.indexOf(" ")).trim();
+                        String stat = str.substring(str.indexOf(" "), str.length()).trim();
+                        data.put(Integer.valueOf(num), stat);
+                    } else {
+                        String num = str.trim();
+                        data.put(Integer.valueOf(num), "");
+                    }
+                }
+                fr.close();
+                br.close();
+                System.out.println("Berjaya! Fail [" + name + "] telah di muat");
+            } catch (IOException e) {
+                System.out.println("Ralat: Fail [" + name + "] tidak dapat di muat");
+            }
         } else {
             System.err.println("Ralat: Direktori Basic tidak wujud");
         }
