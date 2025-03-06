@@ -44,12 +44,6 @@ public enum Keywords {
     // Komen
     REM, // Ulasan/Komen dalam kod
 
-    // Pengendalian Fail (Basic)
-    FOPEN, // Buka fail
-    FCLOSE, // Tutup fail
-    FREAD, // Baca fail
-    FWRITE, // Tulis ke fail
-
     // Kawalan Program (Sistem)
     RUN, // Jalankan kod dalam memori
     LIST, // Senaraikan kod dalam memori
