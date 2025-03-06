@@ -2,6 +2,8 @@
 import java.io.File;
 import java.io.FileReader;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class Program {
@@ -95,8 +97,46 @@ public class Program {
     }
 
     public void listProgram(String stat) {
+        /*
+         * 1. LIST (tanpa parameter) (/)
+         * 2. LIST n (baris tertentu)
+         * 3. LIST n-m (julat baris)
+         * 4. LIST n- (dari baris ke akhir)
+         * 5. LIST -n (dari awal ke baris)
+         * 6. LIST [statement] (arahan tertentu)
+         * 7. LIST n [statement] (arahan dalam baris tertentu)
+         * 8. LIST n-m [statement] (arahan dalam julat baris)
+         */
+        stat = stat.trim();
         if (memory.empty()) {
             System.out.println("Program kosong");
+        } else if (!stat.equals("")) {
+            if (checkIfFirstLineNumber(stat)) {
+                TreeMap<Integer, String> mem = memory.getAll();
+                for (Map.Entry me : mem.entrySet()) {
+                    if (Integer.valueOf(stat).equals((Integer) me.getKey())) System.out.println(me.getKey() + " " + me.getValue());
+                }
+            } else if (stat.startsWith("-")) {
+                stat = stat.substring(1, stat.length()).trim();
+                if (memory.getAll().containsKey(Integer.valueOf(stat))) {
+                    Map.Entry<Integer, String> first = memory.getAll().firstEntry();
+                    SortedMap<Integer, String> sorted = memory.subMap(first.getKey(), Integer.valueOf(stat) + 1);
+                    for (Map.Entry<Integer, String> sort : sorted.entrySet()) {
+                        System.out.println(sort.getKey() + " " + sort.getValue());
+                    }
+                }
+            } else if (stat.endsWith("-")) {
+                stat = stat.substring(0, stat.length() - 1).trim();
+                if (memory.getAll().containsKey(Integer.valueOf(stat))) {
+                    Map.Entry<Integer, String> last = memory.getAll().lastEntry();
+                    SortedMap<Integer, String> sorted = memory.subMap(Integer.valueOf(stat), last.getKey() + 1);
+                    for (Map.Entry<Integer, String> sort : sorted.entrySet()) {
+                        System.out.println(sort.getKey() + " " + sort.getValue());
+                    }
+                }
+            } else {
+
+            }
         } else {
             TreeMap<Integer, String> mem = memory.getAll();
             for (Map.Entry me : mem.entrySet()) {
@@ -256,7 +296,7 @@ public class Program {
 
     private boolean checkIfFirstKeyword(String line, String key) {
         String[] keywords = new String[] {
-                "list", "run", "save", "load", "clear", "new", "listfiles", "scratch"
+                "list", "run", "save", "load", "clear", "new", "listfiles", "scratch", "goto", "gosub", "print", "input"
         };
         if (line.contains(" ")) {
             String first = line.substring(0, line.indexOf(" "));
@@ -264,6 +304,12 @@ public class Program {
         } else {
             for (String kw : keywords) if (line.equals(kw) && line.equals(key)) return true;
         }
+        return false;
+    }
+
+    private boolean checkIfKeyword(String line) {
+        String[] keywords = new String[] {};
+        for (String kw : keywords) if (line.equals(kw)) return true;
         return false;
     }
 
