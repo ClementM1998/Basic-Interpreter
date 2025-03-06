@@ -1,4 +1,6 @@
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -19,11 +21,11 @@ public class Program {
         return System.getProperty("os.name");
     }
 
-    public void restart() {
-        clear();
+    public void restartProgram() {
+        clearProgram();
     }
 
-    public void clear() {
+    public void clearProgram() {
         try {
             if (getOSname().toLowerCase().contains("win")) {
                 // Untuk Windows
@@ -40,7 +42,7 @@ public class Program {
     public void sleep(long times) {
         try {
             Thread.sleep(times);
-        } catch (Exception e) {}
+        } catch (InterruptedException e) {}
     }
 
     public void loading(int style, int total, long times) {
@@ -72,7 +74,7 @@ public class Program {
         }
     }
 
-    public void exit() {
+    public void exitProgram() {
         System.out.println("Program di tamat.");
         try {
             sleep(1000);
@@ -92,33 +94,99 @@ public class Program {
         }
     }
 
-    public void list(String stat) {
-        TreeMap<Integer, String> mem = memory.getAll();
-        for (Map.Entry me : mem.entrySet()) {
-            System.out.println(me.getKey() + " " + me.getValue());
+    public void listProgram(String stat) {
+        if (memory.empty()) {
+            System.out.println("Program kosong");
+        } else {
+            TreeMap<Integer, String> mem = memory.getAll();
+            for (Map.Entry me : mem.entrySet()) {
+                System.out.println(me.getKey() + " " + me.getValue());
+            }
         }
     }
 
-    public void run(String stat) {
+    public void runProgram(String stat) {
         System.out.println("RUN : " + stat);
     }
 
-    public void save(String stat) {
-        if (!stat.endsWith(".bas")) stat = stat + ".bas";
+    public void saveProgram(String stat) {
+        stat = stat.trim();
         if (stat.equals("")) {
             System.out.println("Ralat: Nama fail kosong");
             System.out.println("Sila masukkan nama fail yang di simpan");
             return;
         }
+        if (!stat.endsWith(".bas")) stat = stat + ".bas";
         if (memory.empty()) {
             System.out.println("Ralat: Fail [" + stat + "] tidak dapat di simpan");
             System.out.println("Memory kosong");
             return;
         }
-        memory.save(stat, memory.getAll());
+        File file = new File(memory.getDirectoryBasic(), stat);
+        if (!file.exists()) {
+            memory.save(stat, memory.getAll());
+            //System.out.println("Berjaya! Fail [" + stat + "] di simpan");
+        } else {
+            System.out.println("Ralat: Fail [" + stat + "] telah wujud");
+        }
     }
 
-    public void load(String stat) {
+    public void loadProgram(String stat) {
+        stat = stat.trim();
+        if (stat.equals("")) {
+            System.out.println("Ralat: Nama fail kosong");
+            System.out.println("Sila masukkan nama fail yang ingin di muat");
+            return;
+        }
+        if (!stat.endsWith(".bas")) stat = stat + ".bas";
+        File file = new File(memory.getDirectoryBasic(), stat);
+        if (file.exists()) {
+            TreeMap<Integer, String> mem = memory.load(stat);
+            for (Map.Entry m : mem.entrySet()) {
+                memory.add((Integer) m.getKey(), (String) m.getValue());
+            }
+            //System.out.println("Berjaya! Fail [" + stat + "] telah di muat");
+        } else {
+            System.out.println("Ralat: Fail [" + stat + "] tidak di temukan");
+        }
+    }
+
+    public void newProgram() {
+        if (!memory.empty()) {
+            memory.clear();
+            System.out.println("Program telah di kosongkan");
+        } else {
+            System.out.println("Program memang kosong");
+        }
+    }
+
+    public void listfilesProgram() {
+        File file = new File(memory.getDirectoryBasic());
+        System.out.println("[main-dir] /" + file.getName());
+        for (File files : file.listFiles()) {
+            if (files.isDirectory()) {
+                System.out.println("     [dir] ---- " + files.getName());
+            } else if (files.isFile()) {
+                System.out.println("    [file] ---- " + files.getName());
+            }
+        }
+    }
+
+    public void scratchProgram(String stat) {
+        stat = stat.trim();
+        if (stat.equals("")) {
+            System.out.println("Ralat: Nama fail kosong");
+            System.out.println("Sila masukkan nama fail yang di ingin di padam");
+            return;
+        }
+        if (!stat.endsWith(".bas")) stat = stat + ".bas";
+        File file = new File(memory.getDirectoryBasic(), stat);
+        if (file.exists()) {
+            file.delete();
+            System.out.println("Berjaya! Fail [" + stat + "] telah di padam");
+        } else {
+            System.out.println("Ralat: Fail [" + stat + "] tidak di temukan");
+        }
     }
 
     public void commandLine(String in) {
@@ -140,21 +208,29 @@ public class Program {
             if (checkIfFirstKeyword(in, "list")) {
                 String stat = "";
                 if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
-                list(stat.trim());
+                listProgram(stat);
             } else if (checkIfFirstKeyword(in, "run")) {
                 String stat = "";
                 if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
-                run(stat.trim());
+                runProgram(stat);
             } else if (checkIfFirstKeyword(in, "save")) {
                 String name = "";
                 if (in.contains(" ")) name = in.substring(in.indexOf(" "));
-                save(name.trim());
+                saveProgram(name);
             } else if (checkIfFirstKeyword(in, "load")) {
                 String name = "";
                 if (in.contains(" ")) name = in.substring(in.indexOf(" "));
-                load(name.trim());
+                loadProgram(name);
             } else if (checkIfFirstKeyword(in, "clear")) {
-                clear();
+                clearProgram();
+            } else if (checkIfFirstKeyword(in, "new")) {
+                newProgram();
+            } else if (checkIfFirstKeyword(in, "listfiles")) {
+                listfilesProgram();
+            } else if (checkIfFirstKeyword(in, "scratch")) {
+                String stat = "";
+                if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
+                scratchProgram(stat);
             } else {
                 System.out.println("Ralat Sintaks");
             }
@@ -180,7 +256,7 @@ public class Program {
 
     private boolean checkIfFirstKeyword(String line, String key) {
         String[] keywords = new String[] {
-                "list", "run", "save", "load", "clear"
+                "list", "run", "save", "load", "clear", "new", "listfiles", "scratch"
         };
         if (line.contains(" ")) {
             String first = line.substring(0, line.indexOf(" "));
