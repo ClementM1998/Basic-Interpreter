@@ -46,27 +46,27 @@ public class Program {
     public void loading(int style, int total, long times) {
         if (style == PROGRESS_BAR_1) {
             String[] loadingFrames = {"|", "/", "-", "\\"};
-            System.out.print("Loading ");
+            System.out.print("Sedang dimuatkan ");
             for (int i = 0;i < total;i++) {
-                System.out.print("\rLoading " + loadingFrames[i % 4]);
+                System.out.print("\rSedang dimuatkan " + loadingFrames[i % 4]);
                 sleep(times);
             }
             System.out.println("\rLoading Selesai!");
         } else if (style == PROGRESS_BAR_2) {
-            System.out.print("Loading: [");
+            System.out.print("Sedang dimuatkan: [");
             for (int i = 0;i <= total;i++) {
                 System.out.print("=");
                 sleep(times);
             }
             System.out.println("] 100% Selesai!");
         } else if (style == PROGRESS_BAR_3) {
-            System.out.print("Loading: [");
+            System.out.print("Sedang dimuatkan: [");
             for (int i = 0;i <= total;i++) {
                 System.out.print("=");
                 int percentage = (i * 100) / total;
                 System.out.print("] " + percentage + "%");
                 sleep(times);
-                System.out.print("\rLoading: [");
+                System.out.print("\rSedang dimuatkan: [");
             }
             System.out.println("] 100% Selesai!");
         }
