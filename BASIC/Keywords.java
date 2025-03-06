@@ -5,7 +5,8 @@ public enum Keywords {
 
     // Kawalan Aliran (Control Flow)
     LET, // Mengisytiharkan dan menetapkan nilai kepada pembolehubah
-    IF_THEN, // Struktur kawalan bersyarat
+    IF, // Untuk menguji syarat jika (TRUE) atau (FALSE)
+    THEN, // Menentukan apa perlu di lakukan jika (TRUE) atau (FALSE)
     GOTO, // Lompat ke nombor baris tertentu
     GOSUB, // Panggil subrutin
     RETURN, // Kembali daripada subrutin
