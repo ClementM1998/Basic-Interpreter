@@ -78,7 +78,7 @@ public class Basic {
         Program program = new Program();
         while (Program.system != Program.PROGRAM_STOP) {
             if (Program.system == Program.PROGRAM_RESTART) {
-                program.restart();
+                program.restartProgram();
             }
             System.out.println("Selamat datang ke Basic");
             while (true) {
@@ -94,8 +94,8 @@ public class Basic {
                 else program.commandLine(in);
             }
         }
-        program.clear();
-        program.exit();
+        program.clearProgram();
+        program.exitProgram();
     }
 
     public static void main(String[] args) {
