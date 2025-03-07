@@ -2,6 +2,7 @@
 import java.io.*;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class Memory {
@@ -68,6 +69,14 @@ public class Memory {
             return null;
         }
         return memory;
+    }
+
+    public SortedMap<Integer, String> subMap(int from, int to) {
+        if (memory == null) {
+            System.out.println("Ralat: memory adalah null");
+            return null;
+        }
+        return memory.subMap(from, to);
     }
 
     public void save(String name, TreeMap<Integer, String> data) {
