@@ -53,6 +53,7 @@ public enum Keywords {
     CONT, // Sambung semula program selepas STOP
     CLEAR, // (Basic) Kosongkan skrin
     SAVE, // (Basic) simpan fail dalam direktori
-    LOAD, // (Basic) memuat naik fail dalam direktori
+    LOAD, // (Basic) memuat naik fail dari direktori ke memori
+    FILES, // (Basic) Menunjukkan fail dalam penyimpanan direktori
 
 }
