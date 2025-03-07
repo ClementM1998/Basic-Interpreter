@@ -162,13 +162,7 @@ public class Program {
             System.out.println("Memory kosong");
             return;
         }
-        File file = new File(memory.getDirectoryBasic(), stat);
-        if (!file.exists()) {
-            memory.save(stat, memory.getAll());
-            //System.out.println("Berjaya! Fail [" + stat + "] di simpan");
-        } else {
-            System.out.println("Ralat: Fail [" + stat + "] telah wujud");
-        }
+        memory.save(stat, memory.getAll());
     }
 
     public void loadProgram(String stat) {
