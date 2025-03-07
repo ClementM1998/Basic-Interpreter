@@ -111,12 +111,12 @@ public class Program {
         if (memory.empty()) {
             System.out.println("Program kosong");
         } else if (!stat.equals("")) {
-            if (checkIfFirstLineNumber(stat)) {
+            if (checkIfNumber(stat)) {
                 TreeMap<Integer, String> mem = memory.getAll();
                 for (Map.Entry me : mem.entrySet()) {
                     if (Integer.valueOf(stat).equals((Integer) me.getKey())) System.out.println(me.getKey() + " " + me.getValue());
                 }
-            } else if (stat.startsWith("-")) {
+            } /* else if (stat.startsWith("-")) {
                 stat = stat.substring(1, stat.length()).trim();
                 if (memory.getAll().containsKey(Integer.valueOf(stat))) {
                     Map.Entry<Integer, String> first = memory.getAll().firstEntry();
@@ -134,8 +134,17 @@ public class Program {
                         System.out.println(sort.getKey() + " " + sort.getValue());
                     }
                 }
-            } else {
-
+            }*/ else if (stat.contains("-")) {
+                String first = stat.substring(0, stat.indexOf("-")).trim();
+                String second = stat.substring(stat.indexOf("-")+1).trim();
+                int numFirst = -1;
+                int numSecond = -1;
+                if (checkIfNumber(first)) numFirst = Integer.valueOf(first);
+                if (checkIfNumber(second)) numSecond = Integer.valueOf(second);
+                SortedMap<Integer, String> sorted = memory.subMap(numFirst, numSecond + 1);
+                for (Map.Entry<Integer, String> sort : sorted.entrySet()) {
+                    System.out.println(sort.getKey() + " " + sort.getValue());
+                }
             }
         } else {
             TreeMap<Integer, String> mem = memory.getAll();
@@ -224,7 +233,7 @@ public class Program {
     }
 
     public void commandLine(String in) {
-        if (checkIfFirstLineNumber(in)) {
+        if (checkIfNumber(in)) {
             String number = "";
             String statement = "";
             if (in.contains(" ")) {
@@ -259,7 +268,7 @@ public class Program {
                 clearProgram();
             } else if (checkIfFirstKeyword(in, "new")) {
                 newProgram();
-            } else if (checkIfFirstKeyword(in, "listfiles")) {
+            } else if (checkIfFirstKeyword(in, "files")) {
                 listfilesProgram();
             } else if (checkIfFirstKeyword(in, "scratch")) {
                 String stat = "";
@@ -271,7 +280,7 @@ public class Program {
         }
     }
 
-    private boolean checkIfFirstLineNumber(String line) {
+    private boolean checkIfNumber(String line) {
         if (line.contains(" ")) {
             String first = line.substring(0, line.indexOf(" "));
             char[] chr = first.toCharArray();
@@ -290,7 +299,7 @@ public class Program {
 
     private boolean checkIfFirstKeyword(String line, String key) {
         String[] keywords = new String[] {
-                "list", "run", "save", "load", "clear", "new", "listfiles", "scratch", "goto", "gosub", "print", "input"
+                "list", "run", "save", "load", "clear", "new", "files", "scratch", "goto", "gosub", "print", "input"
         };
         if (line.contains(" ")) {
             String first = line.substring(0, line.indexOf(" "));
@@ -298,12 +307,6 @@ public class Program {
         } else {
             for (String kw : keywords) if (line.equals(kw) && line.equals(key)) return true;
         }
-        return false;
-    }
-
-    private boolean checkIfKeyword(String line) {
-        String[] keywords = new String[] {};
-        for (String kw : keywords) if (line.equals(kw)) return true;
         return false;
     }
 
