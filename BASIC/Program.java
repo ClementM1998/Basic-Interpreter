@@ -111,9 +111,9 @@ public class Program {
         if (memory.empty()) {
             System.out.println("Program kosong");
         } else if (!stat.equals("")) {
-            if (checkIfNumber(stat)) {
+            if (checkIfFirstNumber(stat)) {
                 TreeMap<Integer, String> mem = memory.getAll();
-                for (Map.Entry me : mem.entrySet()) {
+                for (Map.Entry<Integer, String> me : mem.entrySet()) {
                     if (Integer.valueOf(stat).equals((Integer) me.getKey())) System.out.println(me.getKey() + " " + me.getValue());
                 }
             } /* else if (stat.startsWith("-")) {
@@ -139,8 +139,8 @@ public class Program {
                 String second = stat.substring(stat.indexOf("-")+1).trim();
                 int numFirst = -1;
                 int numSecond = -1;
-                if (checkIfNumber(first)) numFirst = Integer.valueOf(first);
-                if (checkIfNumber(second)) numSecond = Integer.valueOf(second);
+                if (checkIfFirstNumber(first)) numFirst = Integer.valueOf(first);
+                if (checkIfFirstNumber(second)) numSecond = Integer.valueOf(second);
                 SortedMap<Integer, String> sorted = memory.subMap(numFirst, numSecond + 1);
                 for (Map.Entry<Integer, String> sort : sorted.entrySet()) {
                     System.out.println(sort.getKey() + " " + sort.getValue());
@@ -155,7 +155,12 @@ public class Program {
     }
 
     public void runProgram(String stat) {
-        System.out.println("RUN : " + stat);
+        stat = stat.trim();
+        if (checkIfFirstNumber(stat)) {
+
+        } else {
+
+        }
     }
 
     public void saveProgram(String stat) {
@@ -233,7 +238,7 @@ public class Program {
     }
 
     public void commandLine(String in) {
-        if (checkIfNumber(in)) {
+        if (checkIfFirstNumber(in)) {
             String number = "";
             String statement = "";
             if (in.contains(" ")) {
@@ -280,7 +285,7 @@ public class Program {
         }
     }
 
-    private boolean checkIfNumber(String line) {
+    private boolean checkIfFirstNumber(String line) {
         if (line.contains(" ")) {
             String first = line.substring(0, line.indexOf(" "));
             char[] chr = first.toCharArray();
