@@ -25,7 +25,7 @@ public class Memory {
 
     public void add(int num, String line) {
         if (memory == null) {
-            System.err.println("Ralat: memory tidak boleh menyimpan");
+            System.err.println("Ralat: memory adalah null");
             return;
         }
         memory.put(num, line);
@@ -33,7 +33,7 @@ public class Memory {
 
     public String get(int num) {
         if (memory == null) {
-            System.err.println("Ralat: memory tidak boleh diambil");
+            System.err.println("Ralat: memory adalah null");
             return null;
         }
         return memory.get(num);
@@ -41,7 +41,7 @@ public class Memory {
 
     public boolean check(int num) {
         if (memory == null) {
-            System.err.println("Ralat: memory tidak boleh cek");
+            System.err.println("Ralat: memory adalah null");
             return false;
         }
         return memory.containsKey(num);
@@ -49,7 +49,7 @@ public class Memory {
 
     public void clear() {
         if (memory == null) {
-            System.err.println("Ralat: memory tidak boleh di bersihkan");
+            System.err.println("Ralat: memory adalah null");
             return;
         }
         memory.clear();
@@ -65,7 +65,7 @@ public class Memory {
 
     public TreeMap<Integer, String> getAll() {
         if (memory == null) {
-            System.err.println("Ralat: memory tidak boleh di akses");
+            System.err.println("Ralat: memory adalah null");
             return null;
         }
         return memory;
@@ -73,7 +73,7 @@ public class Memory {
 
     public SortedMap<Integer, String> subMap(int from, int to) {
         if (memory == null) {
-            System.out.println("Ralat: memory adalah null");
+            System.err.println("Ralat: memory adalah null");
             return null;
         }
         return memory.subMap(from, to);
