@@ -157,9 +157,26 @@ public class Program {
     public void runProgram(String stat) {
         stat = stat.trim();
         if (checkIfFirstNumber(stat)) {
-
+            if (memory.empty()) {
+                System.out.println("?UNDEFINED LINE NUMBER ERROR");
+            } else if (!memory.getAll().containsKey(Integer.valueOf(stat))) {
+                System.out.println("?UNDEFINED STATEMENT ERROR");
+            } else {
+                Map.Entry<Integer, String> last = memory.getAll().lastEntry();
+                SortedMap<Integer, String> sorted = memory.subMap(Integer.valueOf(stat), last.getKey() + 1);
+                Interpreter interpreter = new Interpreter(sorted);
+                interpreter.launch();
+            }
         } else {
-
+            if (memory.empty()) {
+                System.out.println("?UNDEFINED LINE NUMBER ERROR");
+            } else {
+                Map.Entry<Integer, String> first = memory.getAll().firstEntry();
+                Map.Entry<Integer, String> last = memory.getAll().lastEntry();
+                SortedMap<Integer, String> sorted = memory.subMap(first.getKey(), last.getKey() + 1);
+                Interpreter interpreter = new Interpreter(sorted);
+                interpreter.launch();
+            }
         }
     }
 
@@ -208,7 +225,7 @@ public class Program {
         }
     }
 
-    public void filesProgram() {
+    public void listfilesProgram() {
         File file = new File(memory.getDirectoryBasic());
         System.out.println("[main-dir] /" + file.getName());
         for (File files : file.listFiles()) {
@@ -274,7 +291,7 @@ public class Program {
             } else if (checkIfFirstKeyword(in, "new")) {
                 newProgram();
             } else if (checkIfFirstKeyword(in, "files")) {
-                filesProgram();
+                listfilesProgram();
             } else if (checkIfFirstKeyword(in, "scratch")) {
                 String stat = "";
                 if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
@@ -286,6 +303,7 @@ public class Program {
     }
 
     private boolean checkIfFirstNumber(String line) {
+        if (line.equals("")) return false;
         if (line.contains(" ")) {
             String first = line.substring(0, line.indexOf(" "));
             char[] chr = first.toCharArray();
@@ -303,6 +321,8 @@ public class Program {
     }
 
     private boolean checkIfFirstKeyword(String line, String key) {
+        if (line.equals("")) return false;
+        if (key.equals("")) return false;
         String[] keywords = new String[] {
                 "list", "run", "save", "load", "clear", "new", "files", "scratch", "goto", "gosub", "print", "input"
         };
