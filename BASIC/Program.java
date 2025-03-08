@@ -208,7 +208,7 @@ public class Program {
         }
     }
 
-    public void listfilesProgram() {
+    public void filesProgram() {
         File file = new File(memory.getDirectoryBasic());
         System.out.println("[main-dir] /" + file.getName());
         for (File files : file.listFiles()) {
@@ -274,7 +274,7 @@ public class Program {
             } else if (checkIfFirstKeyword(in, "new")) {
                 newProgram();
             } else if (checkIfFirstKeyword(in, "files")) {
-                listfilesProgram();
+                filesProgram();
             } else if (checkIfFirstKeyword(in, "scratch")) {
                 String stat = "";
                 if (in.contains(" ")) stat = in.substring(in.indexOf(" "));
