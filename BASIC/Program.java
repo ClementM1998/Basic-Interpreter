@@ -165,7 +165,7 @@ public class Program {
                 Map.Entry<Integer, String> last = memory.getAll().lastEntry();
                 SortedMap<Integer, String> sorted = memory.subMap(Integer.valueOf(stat), last.getKey() + 1);
                 Interpreter interpreter = new Interpreter(sorted);
-                interpreter.launch();
+                interpreter.interpret();
             }
         } else {
             if (memory.empty()) {
@@ -175,7 +175,7 @@ public class Program {
                 Map.Entry<Integer, String> last = memory.getAll().lastEntry();
                 SortedMap<Integer, String> sorted = memory.subMap(first.getKey(), last.getKey() + 1);
                 Interpreter interpreter = new Interpreter(sorted);
-                interpreter.launch();
+                interpreter.interpret();
             }
         }
     }
