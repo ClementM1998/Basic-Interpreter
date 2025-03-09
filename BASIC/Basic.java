@@ -73,35 +73,8 @@ import java.util.Scanner;
 public class Basic {
 
     public Basic() {}
-
-    public void launch() {
-        Program program = new Program();
-        while (Program.system != Program.PROGRAM_STOP) {
-            if (Program.system == Program.PROGRAM_RESTART) {
-                program.restartProgram();
-            }
-            System.out.println("Selamat datang ke Basic");
-            while (true) {
-                System.out.print("Basic > ");
-                String in = new Scanner(System.in).nextLine().trim();
-                if (in.equals("exit")) {
-                    Program.system = Program.PROGRAM_STOP;
-                    break;
-                } else if (in.equals("restart")) {
-                    Program.system = Program.PROGRAM_RESTART;
-                    break;
-                }
-                else program.commandLine(in);
-            }
-        }
-        program.clearProgram();
-        program.exitProgram();
-    }
-
+    
     public static void main(String[] args) {
-
-        Basic basic = new Basic();
-        basic.launch();
 
     }
 }
