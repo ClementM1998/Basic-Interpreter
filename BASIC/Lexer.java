@@ -1,7 +1,4 @@
 
 public class Lexer {
-    
-    public Lexer() {
-    }
-    
+    // Saya akan kemas kini tidak lama lagi.
 }
