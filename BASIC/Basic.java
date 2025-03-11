@@ -1,4 +1,6 @@
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /*
@@ -72,9 +74,38 @@ import java.util.Scanner;
 
 public class Basic {
 
-    public Basic() {}
-    
+    public Basic() {
+    }
+
+    public void launch() {
+        BasicProgram program = new BasicProgram();
+        while (BasicProgram.system != BasicProgram.PROGRAM_STOP) {
+            if (BasicProgram.system == BasicProgram.PROGRAM_RESTART) {
+                program.restartProgram();
+            }
+            System.out.println("Selamat datang ke Basic");
+            while (true) {
+                System.out.print("Basic > ");
+                String in = new Scanner(System.in).nextLine().trim();
+                if (in.equals("exit")) {
+                    BasicProgram.system = BasicProgram.PROGRAM_STOP;
+                    break;
+                } else if (in.equals("restart")) {
+                    BasicProgram.system = BasicProgram.PROGRAM_RESTART;
+                    break;
+                }
+                else if (in.equals("")) continue;
+                else program.commandLine(in);
+            }
+        }
+        program.clearProgram();
+        program.exitProgram();
+    }
+
     public static void main(String[] args) {
+
+        Basic basic = new Basic();
+        basic.launch();
 
     }
 }
