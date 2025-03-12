@@ -8,7 +8,7 @@ public class Enviroment {
     private int currentLine = 0;
     private Map<Integer, Statement> program = new HashMap<Integer, Statement>();
     private Stack<Integer> returnStack = new Stack<Integer>();
-    private Queue<Expression> dataQueue = new Queue<Expression>();
+    private Queue<Expression> dataQueue = new LinkedList<Expression>();
     
     public void define(String name, Expression value) {
         variables.put(name, value);
