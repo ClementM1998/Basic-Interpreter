@@ -1,13 +1,15 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import java.util.Queue;
 
 public class Enviroment {
     private final Map<String, Expression> variables = new HashMap<String, Expression>();
     private int currentLine = 0;
     private Map<Integer, Statement> program = new HashMap<Integer, Statement>();
     private Stack<Integer> returnStack = new Stack<Integer>();
-
+    private Queue<Expression> dataQueue = new Queue<Expression>();
+    
     public void define(String name, Expression value) {
         variables.put(name, value);
     }
@@ -47,4 +49,18 @@ public class Enviroment {
         if (returnStack.isEmpty()) throw new RuntimeException("RETURN without GOSUB");
         return returnStack.pop();
     }
+
+    public void addData(ArrayList<Expression> data) {
+        dataQueue.addAll(data);
+    }
+
+    public Expression getNextData() {
+        if (dataQueue.isEmpty()) throw new RuntimeException("Out of Data");
+        Expression exp = dataQueue.poll();
+        try {
+            if (exp instanceof DoubleExpression) return (DoubleExpression) exp;
+            return (IntegerExpression) exp;
+        } catch (NumberFormatException e) {
+            return (StringExpression) exp;
+        }
 }
