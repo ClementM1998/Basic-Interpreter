@@ -7,7 +7,8 @@ public class ReadStatement extends Statement {
     }
 
     public void execute(Environment env) {
-        
+        Expression value = env.getNextData();
+        env.assign(name, value);
     }
     
 }
