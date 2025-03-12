@@ -1,5 +1,5 @@
 
-public class LETStatement extends Statement {
+public class LETStatements extends Statement {
     private final String name;
     private final Expression expression;
 
