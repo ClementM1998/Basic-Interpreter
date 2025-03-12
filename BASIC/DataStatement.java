@@ -8,6 +8,7 @@ public class DataStatement extends Statement {
     }
 
     public void execute(Environment env) {
+        env.addData(data);
     }
     
 }
