@@ -7,6 +7,7 @@ public class DoubleExpression extends Expression {
     }
 
     public Expression evaluate(Environment env) {
+        return new DoubleExpression(value);
     }
     
 }
