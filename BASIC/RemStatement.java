@@ -1,5 +1,5 @@
 
-public class REMStatements extends Statement {
+public class RemStatement extends Statement {
     private final String comment;
 
     public REMStatement(String comment) {
