@@ -1,7 +1,9 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Stack;
 import java.util.Queue;
+import java.util.LinkedList;
 
 public class Enviroment {
     private final Map<String, Expression> variables = new HashMap<String, Expression>();
