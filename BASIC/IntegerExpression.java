@@ -1,5 +1,5 @@
 
-public class IntegerExpression extends Expression {
+public class IntegerExpression extends NumberExpression {
     private final int value;
 
     public IntegerExpression(int value) {
