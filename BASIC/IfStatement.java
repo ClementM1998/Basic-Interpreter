@@ -8,7 +8,7 @@ public class IfStatement extends Statement {
         this.thenBranch = thenBranch;
     }
 
-    public void execute(Enviroment env) {
-        if ((boolean) condition.evaluate(env)) thenBranch.execute(env);
+    public void execute(Environment env) {
+        if (((BooleanExpression) condition.evaluate(env)).value) thenBranch.execute(env);
     }
 }
