@@ -12,7 +12,7 @@ public class Lexer {
             System.out.print("[" + token.type() + ":" + token.data() + "]");
             System.out.print(" ");
             if (token.type() == Type.NEWLINE) System.out.println();
-            if (token.type() == Type.EOL) {
+            if (token.type() == Type.END) {
                 System.out.println("END OF LINE");
                 break;
             }
@@ -257,7 +257,7 @@ public class Lexer {
             }
         }
 
-        tokens.add(new Token(Type.EOL, "EOL"));
+        tokens.add(new Token(Type.END, "END"));
 
         return tokens;
     }
