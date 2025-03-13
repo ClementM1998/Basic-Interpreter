@@ -1,14 +1,17 @@
+import java.util.ArrayList;
 
 public class ReadStatement extends Statement {
-    private final String name;
+    private final ArrayList<String> variablesName;
 
     public ReadStatement(String name) {
-        this.name = name;
+        this.variablesName = variablesName;
     }
 
     public void execute(Environment env) {
-        Expression value = env.getNextData();
-        env.assign(name, value);
+        for (String name : variablesName) {
+            Expression value = env.readNextData(); // Ambil nilai Data
+            env.define(name, value); // Simpan dalam variable
+        }
     }
     
 }
