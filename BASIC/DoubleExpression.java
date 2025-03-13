@@ -1,5 +1,5 @@
 
-public class DoubleExpression extends Expression {
+public class DoubleExpression extends NumberExpression {
     private final double value;
 
     public DoubleExpression(double value) {
