@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class ReadStatement extends Statement {
     private final ArrayList<String> variablesName;
 
-    public ReadStatement(ArrayList<String> name) {
+    public ReadStatement(ArrayList<String> variablesName) {
         this.variablesName = variablesName;
     }
 
