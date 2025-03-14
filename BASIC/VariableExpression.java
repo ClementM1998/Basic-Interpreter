@@ -6,8 +6,8 @@ public class VariableExpression extends Expression {
         this.name = name;
     }
 
-    public Expression evaluate(Enviroment env) {
-        return env.get(name);
+    public Expression evaluate(Environment env) {
+        return env.getVariable(name);
     }
 
 }
