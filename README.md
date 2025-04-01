@@ -39,6 +39,6 @@ Cara menggunakan:
 * Untuk Linux
 1. Muat turun 'Basic-linux.jar' dan 'Basic-linux.sh'
 2. Jadikan fail 'Basic-linux.sh' boleh dijalankan
-   chmod +x Basic-linux.sh
+    `chmod +x Basic-linux.sh`
 3. Jalankan Basic-linux.sh
 
