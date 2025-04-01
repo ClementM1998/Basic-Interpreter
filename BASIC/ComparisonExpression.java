@@ -23,36 +23,36 @@ public class ComparisonExpression extends BinaryExpression {
 
         switch (operator) {
             case EQUAL:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value == ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value == ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp).value == ((DoubleExpression) rightExp).value);
-                return new BooleanExpression(((IntegerExpression) leftExp).value == ((IntegerExpression) rightExp).value);
+                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value == ((DoubleExpression) rightExp.evaluate(env)).value);
+                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value == ((IntegerExpression) rightExp.evaluate(env)).value);
+                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value == ((DoubleExpression) rightExp.evaluate(env)).value);
+                return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value == ((IntegerExpression) rightExp.evaluate(env)).value);
             case NOT_EQUAL:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value != ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value != ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp).value != ((DoubleExpression) rightExp).value);
-                return new BooleanExpression(((IntegerExpression) leftExp).value != ((IntegerExpression) rightExp).value);
+                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value != ((DoubleExpression) rightExp.evaluate(env)).value);
+                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value != ((IntegerExpression) rightExp.evaluate(env)).value);
+                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value != ((DoubleExpression) rightExp.evaluate(env)).value);
+                return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value != ((IntegerExpression) rightExp.evaluate(env)).value);
             case LESS:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value < ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value < ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp).value < ((DoubleExpression) rightExp).value);
-                return new BooleanExpression(((IntegerExpression) leftExp).value < ((IntegerExpression) rightExp).value);
+                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value < ((DoubleExpression) rightExp.evaluate(env)).value);
+                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value < ((IntegerExpression) rightExp.evaluate(env)).value);
+                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value < ((DoubleExpression) rightExp.evaluate(env)).value);
+                return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value < ((IntegerExpression) rightExp.evaluate(env)).value);
             case GREATER:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value > ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value > ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp).value > ((DoubleExpression) rightExp).value);
-                return new BooleanExpression(((IntegerExpression) leftExp).value > ((IntegerExpression) rightExp).value);
+                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value > ((DoubleExpression) rightExp.evaluate(env)).value);
+                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value > ((IntegerExpression) rightExp.evaluate(env)).value);
+                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value > ((DoubleExpression) rightExp.evaluate(env)).value);
+                return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value > ((IntegerExpression) rightExp.evaluate(env)).value);
             case LESS_EQUAL:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value <= ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value <= ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp).value <= ((DoubleExpression) rightExp).value);
-                return new BooleanExpression(((IntegerExpression) leftExp).value <= ((IntegerExpression) rightExp).value);
+                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value <= ((DoubleExpression) rightExp.evaluate(env)).value);
+                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value <= ((IntegerExpression) rightExp.evaluate(env)).value);
+                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value <= ((DoubleExpression) rightExp.evaluate(env)).value);
+                return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value <= ((IntegerExpression) rightExp.evaluate(env)).value);
             case GREATER_EQUAL:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value >= ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp).value >= ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp).value >= ((DoubleExpression) rightExp).value);
-                return new BooleanExpression(((IntegerExpression) leftExp).value >= ((IntegerExpression) rightExp).value);
-            default: throw new RuntimeException("Unknown operator");
+                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value >= ((DoubleExpression) rightExp.evaluate(env)).value);
+                else if (leftExp instanceof DoubleExpression) return new BooleanExpression(((DoubleExpression) leftExp.evaluate(env)).value >= ((IntegerExpression) rightExp.evaluate(env)).value);
+                else if (rightExp instanceof DoubleExpression) return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value >= ((DoubleExpression) rightExp.evaluate(env)).value);
+                return new BooleanExpression(((IntegerExpression) leftExp.evaluate(env)).value >= ((IntegerExpression) rightExp.evaluate(env)).value);
+            default: throw new RuntimeException("Unknown operator: " + operator);
         }
 
     }
