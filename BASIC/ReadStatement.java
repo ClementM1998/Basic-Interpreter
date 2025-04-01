@@ -9,9 +9,10 @@ public class ReadStatement extends Statement {
 
     public void execute(Environment env) {
         for (String name : variablesName) {
-            Expression value = env.readNextData(); // Ambil nilai Data
-            env.define(name, value); // Simpan dalam variable
+            Expression value = env.readNextData(); // Ambil nilai DATA
+            //if (value == null) return;
+            env.defineVariable(name, value); // Simpan dalam variable
         }
     }
-    
+
 }
