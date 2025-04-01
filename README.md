@@ -26,7 +26,7 @@ Projek ini adalah interpreter BASIC yang ditulis dalam Java, diilhamkan oleh Dar
 
 ✅ Membaca dan menjalankan fail skrip *.bas
 
-*Contoh:
+* Contoh:
   `load exampl1.bas`
   atau
   `load exeampl1`
