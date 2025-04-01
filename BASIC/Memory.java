@@ -15,6 +15,9 @@ public class Memory {
         //System.out.println("Path : " + getDirectoryBasic());
         if (!new File(getDirectoryBasic()).exists()) {
             new File(getDirectoryBasic()).mkdir();
+            new BasicTest(getDirectoryBasic());
+        } else {
+            new BasicTest(getDirectoryBasic());
         }
         memory = new TreeMap<Integer, String>();
     }
@@ -79,7 +82,8 @@ public class Memory {
         return memory.subMap(from, to);
     }
 
-    public void save(String name, TreeMap<Integer, String> data) {
+    public void save(String name, TreeMap<Integer, String> data) throws IOException {
+        /*
         if (new File(getDirectoryBasic()).exists()) {
             File file = new File(getDirectoryBasic(), name);
             try {
@@ -95,10 +99,22 @@ public class Memory {
         } else {
             System.err.println("Ralat: Direktori Basic tidak wujud");
         }
+         */
+        if (new File(getDirectoryBasic()).exists()) {
+            File file = new File(getDirectoryBasic(), name);
+            FileWriter fw = new FileWriter(file);
+            for (Map.Entry<Integer, String> m : data.entrySet()) {
+                fw.append(m.getKey() + " " + m.getValue()).append("\n");
+            }
+            fw.close();
+        } else {
+            System.out.println("Ralat: Direktori Basic tidak wujud");
+        }
     }
 
-    public TreeMap<Integer, String> load(String name) {
+    public TreeMap<Integer, String> load(String name) throws IOException {
         TreeMap<Integer, String> data = new TreeMap<Integer, String>();
+        /*
         if (new File(getDirectoryBasic()).exists()) {
             File file = new File(getDirectoryBasic(), name);
             try {
@@ -130,6 +146,34 @@ public class Memory {
             }
         } else {
             System.err.println("Ralat: Direktori Basic tidak wujud");
+        }
+         */
+        if (new File(getDirectoryBasic()).exists()) {
+            File file = new File(getDirectoryBasic(), name);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            StringBuffer buffer = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                buffer.append(line).append("\n");
+            }
+            String[] lines = buffer.toString().trim().split("\n");
+            for (String str : lines) {
+                str = str.trim();
+                if (str.contains(" ")) {
+                    String num = str.substring(0, str.indexOf(" ")).trim();
+                    String stat = str.substring(str.indexOf(" "), str.length()).trim();
+                    data.put(Integer.valueOf(num), stat);
+                } else {
+                    String num = str.trim();
+                    if (num.equals("")) continue;
+                    data.put(Integer.valueOf(num), "");
+                }
+            }
+            fr.close();
+            br.close();
+        } else {
+            System.out.println("Ralat: Direktori Basic tidak wujud");
         }
         return data;
     }
