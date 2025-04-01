@@ -26,8 +26,8 @@ Projek ini adalah interpreter BASIC yang ditulis dalam Java, diilhamkan oleh Dar
  *     NEXT
  *     END
  *     DIM
- *     READ
- *     DATA
+ * READ
+ - DATA
 
 ✅ Membaca dan menjalankan fail skrip *.bas
 ✅ Mod REPL interaktif (Read-Eval-Print Loop)
