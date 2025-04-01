@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.SortedMap;
 
@@ -15,12 +16,20 @@ public class BasicProgram {
     public static int PROGRESS_BAR_3 = 3; // versi 3 untuk progress bar yang lebih interaktif
 
     private Memory memory = new Memory();
+    private String filesMemory = "";
 
     private String getOSname() {
         return System.getProperty("os.name");
     }
 
+    public BasicProgram() {
+        //System.out.println("BASIC dimuat ...");
+        //loading(1, 10, 1000);
+        //clearProgram();
+    }
+
     public void restartProgram() {
+        newProgram();
         clearProgram();
     }
 
@@ -131,12 +140,13 @@ public class BasicProgram {
                     }
                 }
             }*/ else if (stat.contains("-")) {
+                stat = stat.trim();
                 String first = stat.substring(0, stat.indexOf("-")).trim();
                 String second = stat.substring(stat.indexOf("-")+1).trim();
                 int numFirst = -1;
                 int numSecond = -1;
-                if (checkIfFirstNumber(first)) numFirst = Integer.valueOf(first);
-                if (checkIfFirstNumber(second)) numSecond = Integer.valueOf(second);
+                if (checkIfFirstNumber(first)) numFirst = Integer.valueOf(first.trim());
+                if (checkIfFirstNumber(second)) numSecond = Integer.valueOf(second.trim());
                 for (Map.Entry<Integer, String> sort : memory.subMap(numFirst, numSecond + 1).entrySet()) {
                     System.out.println(sort.getKey() + " " + sort.getValue());
                 }
@@ -191,7 +201,13 @@ public class BasicProgram {
             System.out.println("Memory kosong");
             return;
         }
-        memory.save(stat, memory.getAll());
+        try {
+            filesMemory = stat;
+            memory.save(stat, memory.getAll());
+            System.out.println("Berjaya! Fail [" + stat + "] di simpan");
+        } catch (IOException e) {
+            System.out.println("Ralat: Fail [" + stat + "] tidak dapat di simpan");
+        }
     }
 
     public void loadProgram(String stat) {
@@ -204,18 +220,50 @@ public class BasicProgram {
         if (!stat.endsWith(".bas")) stat = stat + ".bas";
         File file = new File(memory.getDirectoryBasic(), stat);
         if (file.exists()) {
-            for (Map.Entry<Integer, String> m : memory.load(stat).entrySet()) {
-                memory.add((int) m.getKey(), (String) m.getValue());
+            try {
+                memory.clear();
+                filesMemory = stat;
+                for (Map.Entry<Integer, String> m : memory.load(stat).entrySet()) {
+                    memory.add((int) m.getKey(), (String) m.getValue());
+                }
+                System.out.println("Berjaya! Fail [" + stat + "] telah di muat");
+            } catch (IOException e) {
+                System.out.println("Ralat: Fail [" + stat + "] gagal di muat semula");
             }
-            //System.out.println("Berjaya! Fail [" + stat + "] telah di muat");
         } else {
             System.out.println("Ralat: Fail [" + stat + "] tidak di temukan");
+        }
+    }
+
+    private void reloadProgram() {
+        String name = "";
+        if (!filesMemory.equals("")) name = filesMemory;
+        else {
+            System.out.println("Ralat: Nama fail kosong");
+            System.out.println("Tiada fail di muat atau di simpan");
+            return;
+        }
+        if (!name.endsWith(".bas")) name = name + ".bas";
+        File file = new File(memory.getDirectoryBasic(), name);
+        if (file.exists()) {
+            try {
+                memory.clear();
+                for (Map.Entry<Integer, String> m : memory.load(name).entrySet()) {
+                    memory.add((int) m.getKey(), (String) m.getValue());
+                }
+                System.out.println("Berjaya! Fail [" + name + "] telah di muat semula");
+            } catch (IOException e) {
+                System.out.println("Ralat: Fail [" + name + "] gagal di muat semula");
+            }
+        } else {
+            System.out.println("Ralat: Fail [" + name + "] tidak di temukan");
         }
     }
 
     public void newProgram() {
         if (!memory.empty()) {
             memory.clear();
+            filesMemory = "";
             System.out.println("Program telah di kosongkan");
         } else {
             System.out.println("Program memang kosong");
@@ -283,6 +331,8 @@ public class BasicProgram {
                 String name = "";
                 if (in.contains(" ")) name = in.substring(in.indexOf(" "));
                 loadProgram(name);
+            } else if (checkIfFirstKeyword(in, "reload")) {
+                reloadProgram();
             } else if (checkIfFirstKeyword(in, "clear")) {
                 clearProgram();
             } else if (checkIfFirstKeyword(in, "new")) {
@@ -321,13 +371,15 @@ public class BasicProgram {
         if (line.equals("")) return false;
         if (key.equals("")) return false;
         String[] keywords = new String[] {
-                "list", "run", "save", "load", "clear", "new", "files", "scratch", "goto", "gosub", "print", "input"
+                "list", "run", "save", "load", "reload", "clear", "new", "files", "scratch", "goto", "gosub", "print", "input"
         };
+
         if (line.contains(" ")) {
-            String first = line.substring(0, line.indexOf(" "));
-            for (String kw : keywords) if (first.equals(kw) && first.equals(key)) return true;
+            String first = line.substring(0, line.indexOf(" ")).toUpperCase();
+            for (String kw : keywords) if (first.equals(kw.toUpperCase()) && first.equals(key.toUpperCase())) return true;
         } else {
-            for (String kw : keywords) if (line.equals(kw) && line.equals(key)) return true;
+            line = line.toUpperCase();
+            for (String kw : keywords) if (line.equals(kw.toUpperCase()) && line.equals(key.toUpperCase())) return true;
         }
         return false;
     }
