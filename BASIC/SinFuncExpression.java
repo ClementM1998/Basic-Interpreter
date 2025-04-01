@@ -23,4 +23,5 @@ public class SinFuncExpression extends Expression {
         return new DoubleExpression(sum);
         */
         return new DoubleExpression(BasicMath.sin(value));
+    }
 }
