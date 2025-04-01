@@ -5,8 +5,7 @@ public class ArithmeticExpression extends BinaryExpression {
         ADD,
         SUBTRACT,
         MULTIPLY,
-        DIVIDE,
-        POWER
+        DIVIDE
     }
 
     final Operator operator;
@@ -20,35 +19,46 @@ public class ArithmeticExpression extends BinaryExpression {
         Expression leftExp = left.evaluate(env);
         Expression rightExp = right.evaluate(env);
 
+        double leftValue = extractValue(leftExp, env);
+        double rightValue = extractValue(rightExp, env);
+
+        double result;
         switch (operator) {
             case ADD:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value + ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value + ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new DoubleExpression(((IntegerExpression) leftExp).value + ((DoubleExpression) rightExp).value);
-                else return new IntegerExpression(((IntegerExpression) leftExp).value + ((IntegerExpression) rightExp).value);
+                result = leftValue + rightValue;
+                break;
             case SUBTRACT:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value - ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value - ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new DoubleExpression(((IntegerExpression) leftExp).value - ((DoubleExpression) rightExp).value);
-                else return new IntegerExpression(((IntegerExpression) leftExp).value - ((IntegerExpression) rightExp).value);
+                result = leftValue - rightValue;
+                break;
             case MULTIPLY:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value * ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value * ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new DoubleExpression(((IntegerExpression) leftExp).value * ((DoubleExpression) rightExp).value);
-                else return new IntegerExpression(((IntegerExpression) leftExp).value * ((IntegerExpression) rightExp).value);
+                result = leftValue * rightValue;
+                break;
             case DIVIDE:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value / ((DoubleExpression) rightExp).value);
-                else if (leftExp instanceof DoubleExpression) return new DoubleExpression(((DoubleExpression) leftExp).value / ((IntegerExpression) rightExp).value);
-                else if (rightExp instanceof DoubleExpression) return new DoubleExpression(((IntegerExpression) leftExp).value / ((DoubleExpression) rightExp).value);
-                else return new IntegerExpression(((IntegerExpression) leftExp).value / ((IntegerExpression) rightExp).value);
-            case POWER:
-                if (leftExp instanceof DoubleExpression && rightExp instanceof DoubleExpression) return new DoubleExpression(Math.pow(((DoubleExpression) leftExp).value , ((DoubleExpression) rightExp).value));
-                else if (leftExp instanceof DoubleExpression) return new DoubleExpression(Math.pow(((DoubleExpression) leftExp).value , ((IntegerExpression) rightExp).value));
-                else if (rightExp instanceof DoubleExpression) return new DoubleExpression(Math.pow(((IntegerExpression) leftExp).value , ((DoubleExpression) rightExp).value));
-                else return new DoubleExpression(Math.pow(((IntegerExpression) leftExp).value , ((IntegerExpression) rightExp).value));
-            default: throw new RuntimeException("Unknown operator");
+                if (rightValue == 0) throw new ArithmeticException("Division by zero");
+                result = leftValue / rightValue;
+                break;
+            default:
+                throw new RuntimeException("Unknown operator");
         }
 
+        String value = String.valueOf(result);
+        if (lastValue(value)) return new DoubleExpression(Double.parseDouble(value));
+        else return (leftExp instanceof IntegerExpression && rightExp instanceof IntegerExpression) ? new IntegerExpression((int) result) : new DoubleExpression(result);
+    }
+
+    private double extractValue(Expression exp, Environment env) {
+        Expression ext = exp.evaluate(env);
+        if (ext instanceof DoubleExpression) return ((DoubleExpression) exp.evaluate(env)).value;
+        if (ext instanceof IntegerExpression) return ((IntegerExpression) exp.evaluate(env)).value;
+        throw new RuntimeException("Unsupported expression type");
+    }
+
+    private boolean lastValue(String value) {
+        if (value.contains(".")) {
+            value = value.substring(value.lastIndexOf(".") + 1);
+            if (Long.valueOf(value).equals(0)) return false;
+            return true;
+        } else return false;
     }
 
 }
