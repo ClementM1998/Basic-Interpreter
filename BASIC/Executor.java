@@ -1,16 +1,28 @@
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Executor {
     private final Environment env;
+    private final TreeMap<Integer, Statement> parse;
 
-    public Executor(Environment env) {
-        this.env = env;
+    public Executor(TreeMap<Integer, Statement> parse) {
+        this.env = new Environment();
+        this.parse = parse;
+
+        for (Map.Entry<Integer, Statement> me : parse.entrySet()) {
+
+            if (me.getValue() instanceof DataStatement) {
+                me.getValue().execute(env);
+            }
+
+            env.addLine(me.getKey(), me.getValue());
+        }
     }
 
     public void run() {
         Integer currentLine = env.getNextStatement(); // Ambil baris pertama
 
         while (currentLine != null) {
-
             Statement stmt = env.getStatement(currentLine);
 
             if (stmt == null) throw new RuntimeException("Nothing statement in line " + currentLine);
