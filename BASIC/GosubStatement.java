@@ -7,7 +7,9 @@ public class GosubStatement extends Statement {
     }
 
     public void execute(Environment env) {
-        env.callSubroutine(lineNumber);
+        Integer line = env.getNextStatement();
+        if (line != null) env.pushReturnAddress(line); // Simpan baris asal sebelum lompat
+        env.setNextLine(lineNumber);
     }
 
 }
