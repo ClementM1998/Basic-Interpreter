@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Lexer {
     private String code;
+    private int hasString = 0;
 
     public Lexer(String code) {
         this.code = code;
@@ -35,24 +36,20 @@ public class Lexer {
                         } else {
                             continue;
                         }
-                    }
-                    else if (isDigit(c)) {
+                    } else if (isDigit(c)) {
                         data += c;
                         type = Type.NUMBER;
-                    }
-                    else if (isLetter(c)) {
+                    } else if (isLetter(c)) {
                         data += c;
                         type = Type.LETTER;
-                    }
-                    else if (isOperator(c)) {
+                    } else if (isOperator(c)) {
                         data += c;
                         type = Type.OPERATOR;
-                    }
-                    else if (isSymbol(c)) {
+                    } else if (isSymbol(c)) {
                         data += c;
                         type = Type.SYMBOL;
-                    }
-                    else if (c == '"') {
+                    } else if (c == '"') {
+                        hasString++;
                         data += c;
                         type = Type.STRING;
                     }
@@ -60,60 +57,57 @@ public class Lexer {
                 case LETTER:
                     if (isWhitespace(c)) {
                         if (c == '\n') {
-                            if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data));
-                            else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data));
-                            else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data));
-                            else tokens.add(new Token(Type.IDENTIFIER, data));
+                            if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data.toUpperCase()));
+                            else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data.toUpperCase()));
+                            else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data.toUpperCase()));
+                            else tokens.add(new Token(Type.IDENTIFIER, data.toUpperCase()));
                             tokens.add(new Token(Type.NEWLINE, "NEWLINE"));
                             data = "";
                             type = Type.READLINE;
                         } else {
-                            if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data));
-                            else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data));
-                            else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data));
-                            else tokens.add(new Token(Type.IDENTIFIER, data));
+                            if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data.toUpperCase()));
+                            else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data.toUpperCase()));
+                            else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data.toUpperCase()));
+                            else tokens.add(new Token(Type.IDENTIFIER, data.toUpperCase()));
                             data = "";
                             type = Type.READLINE;
                         }
-                    } else if (isDigit(c)) {
-                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data));
-                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data));
-                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data));
-                        else tokens.add(new Token(Type.IDENTIFIER, data));
-                        data = "";
-                        data += c;
-                        type = Type.NUMBER;
-                    }
-                    else if (isLetter(c)) {
+                    } else if (isLetterOrDigit(c)) {
                         data += c;
                         type = Type.LETTER;
-                    }
-                    else if (isOperator(c)) {
-                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data));
-                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data));
-                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data));
-                        else tokens.add(new Token(Type.IDENTIFIER, data));
+                    } else if (isOperator(c)) {
+                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data.toUpperCase()));
+                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data.toUpperCase()));
+                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data.toUpperCase()));
+                        else tokens.add(new Token(Type.IDENTIFIER, data.toUpperCase()));
                         data = "";
                         data += c;
                         type = Type.OPERATOR;
-                    }
-                    else if (isSymbol(c)) {
-                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data));
-                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data));
-                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data));
-                        else tokens.add(new Token(Type.IDENTIFIER, data));
+                    } else if (isSymbol(c)) {
+                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data.toUpperCase()));
+                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data.toUpperCase()));
+                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data.toUpperCase()));
+                        else tokens.add(new Token(Type.IDENTIFIER, data.toUpperCase()));
                         data = "";
                         data += c;
                         type = Type.SYMBOL;
-                    }
-                    else if (c == '"') {
-                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data));
-                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data));
-                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data));
-                        else tokens.add(new Token(Type.IDENTIFIER, data));
+                    } else if (c == '"') {
+                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data.toUpperCase()));
+                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data.toUpperCase()));
+                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data.toUpperCase()));
+                        else tokens.add(new Token(Type.IDENTIFIER, data.toUpperCase()));
                         data = "";
+                        hasString++;
                         data += c;
                         type = Type.STRING;
+                    } else if (isDigit(c)) {
+                        if (isKeyword(data.toLowerCase())) tokens.add(new Token(Type.KEYWORD, data.toUpperCase()));
+                        else if (isMathDef(data.toLowerCase())) tokens.add(new Token(Type.FUNCTION, data.toUpperCase()));
+                        else if (isOperatorLogic(data.toLowerCase())) tokens.add(new Token(Type.OPERATOR, data.toUpperCase()));
+                        else tokens.add(new Token(Type.IDENTIFIER, data.toUpperCase()));
+                        data = "";
+                        data += c;
+                        type = Type.NUMBER;
                     }
                     break;
                 case NUMBER:
@@ -131,36 +125,35 @@ public class Lexer {
                     } else if (isDigit(c) || c == '.') {
                         data += c;
                         type = Type.NUMBER;
-                    }
-                    else if (isLetter(c)) {
+                    } else if (isLetter(c)) {
                         tokens.add(new Token(Type.NUMBER, data));
                         data = "";
                         data += c;
                         type = Type.LETTER;
-                    }
-                    else if (isOperator(c)) {
+                    } else if (isOperator(c)) {
                         tokens.add(new Token(Type.NUMBER, data));
                         data = "";
                         data += c;
                         type = Type.OPERATOR;
-                    }
-                    else if (isSymbol(c)) {
+                    } else if (isSymbol(c)) {
                         tokens.add(new Token(Type.NUMBER, data));
                         data = "";
                         data += c;
                         type = Type.SYMBOL;
-                    }
-                    else if (c == '"') {
+                    } else if (c == '"') {
                         tokens.add(new Token(Type.NUMBER, data));
                         data = "";
+                        hasString++;
                         data += c;
                         type = Type.STRING;
                     }
                     break;
                 case STRING:
                     if (c == '"') {
+                        hasString--;
                         data += c;
-                        tokens.add(new Token(Type.STRING, data));
+                        if (hasString == 0) tokens.add(new Token(Type.STRING, data));
+                        else throw new RuntimeException("Unexpected string: " + hasString);
                         data = "";
                         type = Type.READLINE;
                     } else {
@@ -188,29 +181,26 @@ public class Lexer {
                         data = "";
                         data += c;
                         type = Type.NUMBER;
-                    }
-                    else if (isLetter(c)) {
+                    } else if (isLetter(c)) {
                         if (isOperator(data)) tokens.add(new Token(Type.OPERATOR, data));
                         else tokens.add(new Token(Type.ERROR, data));
                         data = "";
                         data += c;
                         type = Type.LETTER;
-                    }
-                    else if (isOperator(c)) {
+                    } else if (isOperator(c)) {
                         data += c;
                         type = Type.OPERATOR;
-                    }
-                    else if (isSymbol(c)) {
+                    } else if (isSymbol(c)) {
                         if (isOperator(data)) tokens.add(new Token(Type.OPERATOR, data));
                         else tokens.add(new Token(Type.ERROR, data));
                         data = "";
                         data += c;
                         type = Type.SYMBOL;
-                    }
-                    else if (c == '"') {
+                    } else if (c == '"') {
                         if (isOperator(data)) tokens.add(new Token(Type.OPERATOR, data));
                         else tokens.add(new Token(Type.ERROR, data));
                         data = "";
+                        hasString++;
                         data += c;
                         type = Type.STRING;
                     }
@@ -232,24 +222,27 @@ public class Lexer {
                         data = "";
                         data += c;
                         type = Type.NUMBER;
-                    }
-                    else if (isLetter(c)) {
+                    } else if (isLetter(c)) {
                         tokens.add(new Token(Type.SYMBOL, data));
                         data = "";
                         data += c;
                         type = Type.LETTER;
-                    }
-                    else if (isOperator(c)) {
-                        data += c;
-                        type = Type.OPERATOR;
-                    }
-                    else if (isSymbol(c)) {
-                        data += c;
-                        type = Type.SYMBOL;
-                    }
-                    else if (c == '"') {
+                    } else if (isOperator(c)) {
                         tokens.add(new Token(Type.SYMBOL, data));
                         data = "";
+                        data += c;
+                        type = Type.OPERATOR;
+                    } else if (isSymbol(c)) {
+                        tokens.add(new Token(Type.SYMBOL, data));
+                        data = "";
+                        data += c;
+                        tokens.add(new Token(Type.SYMBOL, data));
+                        data = "";
+                        type = Type.READLINE;
+                    } else if (c == '"') {
+                        tokens.add(new Token(Type.SYMBOL, data));
+                        data = "";
+                        hasString++;
                         data += c;
                         type = Type.STRING;
                     }
@@ -304,7 +297,16 @@ public class Lexer {
 
     private boolean isMathDef(String line) {
         String[] defs = {
-                "abs", "sqr", "exp", "log", "sin", "cos", "tan", "atn", "rnd", "int", "sgn", "tab", "spc",
+                "abs",
+                "atn",
+                "cos",
+                "exp",
+                "int",
+                "log",
+                "rnd",
+                "sin",
+                "sqr",
+                "tan"
         };
         for (String def : defs) if (line.equals(def)) return true;
         return false;
