@@ -1,15 +1,15 @@
 
 public class LetStatement extends Statement {
-    private final String name;
-    private final Expression expression;
+    final String name;
+    final NumberExpression expression;
 
-    public LETStatement(String name, Expression expression) {
+    public LetStatement(String name, NumberExpression expression) {
         this.name = name;
         this.expression = expression;
     }
 
-    public void execute(Enviroment env) {
+    public void execute(Environment env) {
         Expression value = expression.evaluate(env);
-        env.define(name, value);
+        env.defineVariable(name, value);
     }
 }
