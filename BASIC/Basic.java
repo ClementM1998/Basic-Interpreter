@@ -1,7 +1,5 @@
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /*
  * Perihal Basic dari Claymen
@@ -68,13 +66,20 @@ import java.util.Scanner;
  * MID$(X$, start, length) - Mengambil substring dari teks
  * LEFT$(X$, n) - Mengambil n aksara dari kiri string
  * RIGHT$(X$, n) - Mengambil n aksara dari kanan string
- * VAL(X$) - Menukar string ke nombor
+ * VAL(X$) - Menukar string ke nomborfvdfg
  *
  */
 
 public class Basic {
 
     public Basic() {
+    }
+
+    public static void main(String[] args) {
+
+        Basic basic = new Basic();
+        basic.launch();
+
     }
 
     public void launch() {
@@ -92,6 +97,7 @@ public class Basic {
                     break;
                 } else if (in.equals("restart")) {
                     BasicProgram.system = BasicProgram.PROGRAM_RESTART;
+                    program.restartProgram();
                     break;
                 }
                 else if (in.equals("")) continue;
@@ -102,10 +108,4 @@ public class Basic {
         program.exitProgram();
     }
 
-    public static void main(String[] args) {
-
-        Basic basic = new Basic();
-        basic.launch();
-
-    }
 }
