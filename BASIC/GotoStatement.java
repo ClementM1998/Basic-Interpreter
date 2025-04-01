@@ -7,7 +7,7 @@ public class GotoStatement extends Statement {
     }
 
     public void execute(Environment env) {
-        env.jumpTo(lineNumber);
+        env.setNextLine(lineNumber); // Set baris yang hendak dilompat ke nombor baris
     }
 
 }
