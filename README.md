@@ -25,9 +25,18 @@ Projek ini adalah interpreter BASIC yang ditulis dalam Java, diilhamkan oleh Dar
 * DATA
 
 ✅ Membaca dan menjalankan fail skrip *.bas
+
+*Contoh:
+  `load exampl1.bas`
+  atau
+  `load exeampl1`
+
 ✅ Mod REPL interaktif (Read-Eval-Print Loop)
+
 ✅ Menyokong pembolehubah nombor dan teks
+
 ✅ Melaksanakan eksekusi berdasarkan nombor baris
+
 ✅ Pengendalian ralat asas
 
 Cara menggunakan:
