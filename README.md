@@ -33,14 +33,12 @@ Projek ini adalah interpreter BASIC yang ditulis dalam Java, diilhamkan oleh Dar
 Cara menggunakan:
 
 * Untuk Windows
-``
-1. Muat turun 'Basic.jar' dan 'Basic.cmd'
-2. Jalankan Basic.cmd
-``
+` 1. Muat turun 'Basic.jar' dan 'Basic.cmd'`
+` 2. Jalankan Basic.cmd`
+
 * Untuk Linux
-``
-1. Muat turun 'Basic.jar' dan 'Basic.sh'
-2. Jadikan fail 'Basic.sh' boleh dijalankan
+`1. Muat turun 'Basic.jar' dan 'Basic.sh'`
+`2. Jadikan fail 'Basic.sh' boleh dijalankan`
    chmod +x Basic.sh
-3. Jalankan Basic.sh
-``
+`3. Jalankan Basic.sh`
+
