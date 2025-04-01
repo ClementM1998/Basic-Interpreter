@@ -1,17 +1,39 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrintStatement extends Statement {
-    private final Expression expression;
+    private final ArrayList<Expression> expressions;
 
-    public PrintStatement(Expression expression) {
-        this.expression = expression;
+    public PrintStatement(ArrayList<Expression> expression) {
+        this.expressions = expression;
     }
 
     public void execute(Environment env) {
-        Expression value = expression.evaluate(env);
+        for (int i = 0; i < expressions.size(); i++) {
+            Expression value = expressions.get(i).evaluate(env);
 
-        if (value instanceof DoubleExpression) System.out.println(((DoubleExpression) value).value);
-        else if (value instanceof IntegerExpression) System.out.println(((IntegerExpression) value).value);
-        else System.out.println(((StringExpression) value).value);
+            // Papar nilai berdasarkan jenis data
+            if (value instanceof DoubleExpression) System.out.print(((DoubleExpression) value).value);
+            else if (value instanceof IntegerExpression) System.out.print(((IntegerExpression) value).value);
+            else if (value instanceof StringExpression) System.out.print(((StringExpression) value).value);
+            else if (value instanceof ArithmeticExpression) {
+                Expression expr = value.evaluate(env);
+                if (expr instanceof DoubleExpression) System.out.print(((DoubleExpression) expr).value);
+                else if (expr instanceof IntegerExpression) System.out.print(((IntegerExpression) expr).value);
+            }
+
+            // Jika ada elemen seterusnya, periksa pemisah
+            if (i < expressions.size()) {
+                Expression next = expressions.get(i);
+
+                if (next instanceof SeparatorExpression) {
+                    SeparatorExpression separator = (SeparatorExpression) next;
+                    if ((separator.separator.equals(";"))) continue; // ';' tidak menambah ruang
+                    else if (separator.separator.equals(",")) System.out.print(" "); // ',' menambah tab
+                }
+            }
+        }
+        System.out.println();
     }
 
 }
