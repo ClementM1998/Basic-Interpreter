@@ -12,8 +12,24 @@ Projek ini adalah interpreter BASIC yang ditulis dalam Java, diilhamkan oleh Dar
 
 ✅ Menyokong sintaks asal Dartmouth BASIC 1964, termasuk:
 
-PRINT, INPUT, LET, IF ... THEN, FOR ... NEXT, GOTO, GOSUB, RETURN, END
-✅ Membaca dan menjalankan fail skrip .bas
+ *     LET
+ *     PRINT
+ *     INPUT
+ *     IF
+ *     THEN
+ *     GOTO
+ *     GOSUB
+ *     RETURN
+ *     FOR
+ *     TO
+ *     STEP
+ *     NEXT
+ *     END
+ *     DIM
+ *     READ
+ *     DATA
+
+✅ Membaca dan menjalankan fail skrip *.bas
 ✅ Mod REPL interaktif (Read-Eval-Print Loop)
 ✅ Menyokong pembolehubah nombor dan teks
 ✅ Melaksanakan eksekusi berdasarkan nombor baris
