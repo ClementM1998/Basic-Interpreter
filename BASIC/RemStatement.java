@@ -2,7 +2,7 @@
 public class RemStatement extends Statement {
     private final String comment;
 
-    public REMStatement(String comment) {
+    public RemStatement(String comment) {
         this.comment = comment;
     }
 
