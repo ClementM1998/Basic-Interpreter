@@ -6,7 +6,7 @@ public class RemStatement extends Statement {
         this.comment = comment;
     }
 
-    public void execute(Enviroment env) {
+    public void execute(Environment env) {
         // Tidak melakukan apa-apa, hanya komen
     }
 }
