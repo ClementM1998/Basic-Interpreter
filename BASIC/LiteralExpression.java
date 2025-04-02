@@ -6,7 +6,7 @@ public class LiteralExpression extends Expression {
         this.value = value;
     }
 
-    public Expression evaluate(Enviroment env) {
+    public Expression evaluate(Environment env) {
         return value;
     }
 }
