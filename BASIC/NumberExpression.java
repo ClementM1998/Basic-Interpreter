@@ -1,3 +1,3 @@
 
-public abstract class NumberExpressoin extends Expression {
+public abstract class NumberExpression extends Expression {
 }
