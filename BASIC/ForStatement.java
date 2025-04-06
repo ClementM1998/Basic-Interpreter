@@ -52,7 +52,12 @@ public class ForStatement extends Statement {
         if ((step > 0 && start <= end) || (step < 0 && start >= end)) {
             for (int i = start;(step > 0 ? i <= end : i >= end);i += step) {
                 env.defineVariable(varName, new IntegerExpression(i));
-                for (Map.Entry<Integer, Statement> stmt : body.entrySet()) stmt.getValue().execute(env);
+                for (Map.Entry<Integer, Statement> stmt : body.entrySet()) {
+                    Statement statement = stmt.getValue();
+                    statement.execute(env);
+                    if (!env.isRunning()) return;
+                    //stmt.getValue().execute(env);
+                }
             }
         }
 
