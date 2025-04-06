@@ -7,7 +7,7 @@ public class BasicTest {
 
     public BasicTest(String directory) {
         this.directory = directory;
-
+        
         writeFile("example1.bas", "10 PRINT \"EXAMPLE 1\"\n20 PRINT \"HELLO, WORLD!\"\n30 GOTO 20\n40 END");
         writeFile("example2.bas", "10   PRINT \" \"\n20   PRINT \" [2][2][2][2]                                    [1]\"\n30   PRINT \" [2]         [2]\"\n40   PRINT \" [2]         [2]       [3][3][3]      [4][4][4]  [5]    [6][6][6]\"\n50   PRINT \" [2][2][2][2][2]               [3]  [4]          [5]  [6]       [6]\"\n60   PRINT \" [2]           [2]    [7][7][7][3]  [4][4]       [5]  [6]\"\n70   PRINT \" [2]           [2]  [7]        [3]       [4][4]  [5]  [6]\"\n80   PRINT \" [2]           [2]  [7]        [3]          [4]  [5]  [6]       [6]\"\n90   PRINT \" [2][2][2][2][2]      [7][7][7][7]  [8][8][4]    [5]    [6][6][6]    1964\"\n100  PRINT \"\"");
         writeFile("example3.bas", "10 READ X, Y, Z\n20 PRINT \"X = \"; X\n30 PRINT \"Y = \"; Y\n40 PRINT \"Z = \"; Z\n50 READ A, B\n60 PRINT \"A = \"; A\n70 PRINT \"B = \"; B\n80 DATA -5, 15, 25, 50, 75");
@@ -28,8 +28,10 @@ public class BasicTest {
         writeFile("example18.bas", "10 rem prime.bas\n11 rem run the sieve of erastosthenes program\n12 rem this returns 1899 primes in about 1 second\n13 rem on a raspberry pi 4 running dbasic\n20 let s=8190\n30 dim f(8191)\n40 print \"1 iteration\"\n50 let c=0\n60 for i=0 to 8190\n70 let f(i) = 1\n80 next i\n90 for i=0 to 8190\n100 if f(i) = 0 then 180\n110 let p=i+i+3\n120 let k=i+p\n130 if k > s then 170\n140 let f(k)=0\n150 let k=k+p\n160 goto 130\n170 let c=c+1\n175 rem p is a prime. uncomment 176 to print it\n176 rem print p\n180 next i\n190 print c,\"primes\"\n200 end");
         writeFile("example19.bas", "10 rem This shows an example of the rnd() function\n20 rem When BASIC is invoked, the random number generator is seeded with a\n30 rem random number. This lasts until BASIC is exited, and should be\n40 rem OK for most applications.\n50 rem If the random number generator needs to be reseeded,\n60 rem then put rnd(-1) in a line. This will reseed the random number\n70 rem generator with a new random number.\n80 rem Using rnd(0) or rnd() just returns a random number.\n90 rem Using rnd(1) (or any positive number) will restart the\n100 rem random number generator with a predictable value. Use this\n110 rem when you need a fixed sequence of random numbers.\n200 print \"5 random numbers, seeded at BASIC start\"\n210 for n=1 to 5\n220 print rnd(n)\n230 next n\n240 print \"5 more random numbers, seeded at BASIC start\"\n250 for n=1 to 5\n260 print rnd(n)\n270 next n\n280 print \"reseeding the generator, and 5 random numbers\"\n290 let r=rnd(-1)\n300 for n=1 to 5\n310 print rnd(n)\n320 next n\n330 print \"Seeding the random number generator with a defined value\"\n340 let r=rnd(1)\n350 print \"5 semi-random numbers\"\n360 for n=1 to 5\n370 print rnd(n)\n380 next n\n390 print \"repeat the last sequence\"\n400 let r=rnd(1)\n410 for n=1 to 5\n420 print rnd(n)\n430 next n\n500 print \"done\"\n999 end\n");
         writeFile("example20.bas", "10 READ A1, A2, A3, A4\n15 LET D = A1 * A4 - A3 * A2\n20 IF D = 0 THEN GOTO 65\n30 READ B1, B2\n37 LET X1 = (B1 * A4 - B2 * A2)/D\n42 LET X2 = (A1 * B2 - A3 * B1)/D\n55 PRINT X1, X2\n60 GOTO 30\n65 PRINT \"NO UNIQUE SOLUTION\"\n70 DATA 1,2,4\n80 DATA 2,-7,5\n85 DATA 1,3,4,-7\n90 END");
+        writeFile("example21.bas", "10 LET SUM = 0\n20 FOR I = 1 TO 10\n30 LET SUM = SUM + I\n40 NEXT I\n50 PRINT \"TOTAL SUM = \"; SUM\n60 END");
+        writeFile("example22.bas", "10 PRINT \"ENTER X VALUE\"\n20 INPUT X\n30 PRINT \"VALUE X \"; X\n40 END");
         writeFile("example23.bas", "10 FOR I = 1 TO 5\n20 IF I = 3 THEN END\n30 PRINT \"Nilai I = \";I\n40 NEXT I\n50 END");
-        
+
     }
 
     public boolean createNewFile(String name) {
